@@ -78,13 +78,13 @@ Function_GuiMove(Scriptname, xPos, yPos, xVirtual, yVirtual, wVirtual, hVirtual)
 Function_UpdateTransparency(transValue, winTitle, MyOpacityMenu="")
 {
 	
-	const20					:=			51
-	const40					:=			102	
-	const60					:=			153
-	const80					:=			204
-	const100				:=			255
+	const20		:=			51
+	const40		:=			102	
+	const60		:=			153
+	const80		:=			204
+	const100	:=			255
 	
-try
+	try
 	{
 		; allow parameter to contain hard coded or menu selected value
 		; enabling function to be called from gui or ini readback
@@ -102,7 +102,7 @@ try
 			WinSet, Transparent, %const40%, %winTitle%
 			If !(MyOpacityMenu)
 			{
-			  Menu, MyOpacityMenu, ToggleCheck, 40`%
+				Menu, MyOpacityMenu, ToggleCheck, 40`%
 			}
 			Return % const40
 		}
@@ -111,7 +111,7 @@ try
 			WinSet, Transparent, %const60%, %winTitle%
 			If !(MyOpacityMenu)
 			{
-			  Menu, MyOpacityMenu, ToggleCheck, 60`%
+				Menu, MyOpacityMenu, ToggleCheck, 60`%
 			}
 			Return % const60
 		}
@@ -120,7 +120,7 @@ try
 			WinSet, Transparent, %const80%, %winTitle%
 			If !(MyOpacityMenu)
 			{
-			  Menu, MyOpacityMenu, ToggleCheck, 80`%
+				Menu, MyOpacityMenu, ToggleCheck, 80`%
 			}
 			Return % const80
 		}
@@ -129,7 +129,7 @@ try
 			WinSet, Transparent, %const100%, %winTitle%
 			If !(MyOpacityMenu)
 			{
-			  Menu, MyOpacityMenu, ToggleCheck, 100`%
+				Menu, MyOpacityMenu, ToggleCheck, 100`%
 			}
 			Return % const100
 		}
