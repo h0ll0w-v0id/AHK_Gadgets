@@ -5,7 +5,7 @@
 	
 	ListLines, Off
 	
-	#Include xGraph.ahk
+	#Include Class_xGraph.ahk
 	; #Include FileTail.ahk
 		
 	; set global defaults
