@@ -30,16 +30,16 @@
 	SetTitleMatchMode 2	
 	SetBatchLines -1
 	
-	include <Class_Functions.ahk>
+	#include <Class_Functions.ahk>
 	
 	; set global defaults
-	global scriptName 	:= 			"VisualDrives" 
-	global scriptConfig	:=			"Visual_Config.ini"
-	global guiX		:=			Center
-	global guiY		:=			Center
-	global guiDockPadding	:=			5
-	global guiTransparency	:=			204
-	global guiTheme		:=			Plain
+	global scriptName 	:= 	"VisualDrives" 
+	global scriptConfig	:=	"Visual_Config.ini"
+	global guiX		:=	Center
+	global guiY		:=	Center
+	global guiDockPadding	:=	5
+	global guiTransparency	:=	204
+	global guiTheme		:=	Plain
 	
 	; read in config values if available
 	; TODO add error checking function
@@ -50,19 +50,19 @@
 		IniRead guiTransparency, %scriptConfig%, guiMyDrives, guiTransparency
 	}
 		
-	global guiWidth			:=			400
-	global guiHeight		:=			200
-	global guiControlWidth	:=			( guiWidth - 30 )
+	global guiWidth		:=	400
+	global guiHeight	:=	200
+	global guiControlWidth	:=	( guiWidth - 30 )
 
 	; obs this??
 	; get multiple display resolution
 	SysGet, virtualWidth, 78
 	SysGet, virtualHeight, 79
 	; sets a docking edge 5 px from virtual desktop (for multiple displays)
-	global guiDockRight		:=			( virtualWidth - guiWidth - guiDockPadding )
-	global guiDockBottom	:=			( virtualHeight - guiHeight - guiDockPadding )
+	global guiDockRight	:=	( virtualWidth - guiWidth - guiDockPadding )
+	global guiDockBottom	:=	( virtualHeight - guiHeight - guiDockPadding )
 	; left and top start from 0, so able to reuse var
-	global guiDockLeftTop	:=			guiDockPadding * 3
+	global guiDockLeftTop	:=	guiDockPadding * 3
 	
 	; Transparency Menu
 	Menu, MyOpacityMenu, Add, 20`%, MenuHandler
@@ -71,7 +71,7 @@
 	Menu, MyOpacityMenu, Add, 80`%, MenuHandler
 	Menu, MyOpacityMenu, Add, 100`%, MenuHandler
 	; Themes Menu
-	Menu, MyThemesMenu,	Add, Alien Green, MenuHandler
+	Menu, MyThemesMenu, Add, Alien Green, MenuHandler
 	Menu, MyThemesMenu, Add, Plain, MenuHandler
 	Menu, MyThemesMenu, Add, Cold Blue, MenuHandler
 	Menu, MyThemesMenu, Add, Burnt Red, MenuHandler
@@ -224,6 +224,7 @@ MenuHandler:
 	; MsgBox You selected %A_ThisMenuItem% from the menu %A_ThisMenu%. %scriptName%
 	; SubStr(A_GuiControl, 1)
 Return
+/*
 ; -----------------------------------
 ;	UpdateTransparency
 ;	1st param: value of transparency
@@ -231,11 +232,11 @@ Return
 ; -----------------------------------
 UpdateTransparency(transValue, winTitle)
 {
-	const20					:=			51
-	const40					:=			102	
-	const60					:=			153
-	const80					:=			204
-	const100				:=			255
+	const20		:=			51
+	const40		:=			102	
+	const60		:=			153
+	const80		:=			204
+	const100	:=			255
 	
 	try
 	{
@@ -278,7 +279,7 @@ UpdateTransparency(transValue, winTitle)
 		Return 0
 	}
 }
-
+*/
 ; -----------------------------------
 ; 	UpdateDrive
 ;	Desc: 
@@ -371,14 +372,14 @@ GuiClose:
 GuiEscape:
 	GuiControlGet, curPosition,,guiSlider
 	; capture GUI position and record it in INI
-	WinGetPos, 	guiX, guiY, , ,		%scriptName%
+	WinGetPos, guiX, guiY, , , %scriptName%
 	; do not allow GUI position to be negative
 	if (guiX > 0) and (guiY > 0)
 	{
-		IniWrite,	%guiX%,		%scriptConfig%,		guiMyDrives,		guiX
-		IniWrite,	%guiY%,		%scriptConfig%, 	guiMyDrives,		guiY
+		IniWrite, %guiX%, %scriptConfig%, guiMyDrives, guiX
+		IniWrite, %guiY%, %scriptConfig%, guiMyDrives, guiY
 	}
-		IniWrite,	%guiTransparency%, %scriptConfig%, guiMyDrives, guiTransparency
+		IniWrite, %guiTransparency%, %scriptConfig%, guiMyDrives, guiTransparency
 ExitApp	
 	
 	
