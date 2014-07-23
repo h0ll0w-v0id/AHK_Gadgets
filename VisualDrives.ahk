@@ -30,16 +30,19 @@
 	SetTitleMatchMode 2	
 	SetBatchLines -1
 	
+	include <Class_Functions.ahk>
+	
 	; set global defaults
-	global scriptName 		:= 			"MyDrives" 
-	global scriptConfig		:=			"GadgetsConfig.ini"
-	global guiX				:=			Center
-	global guiY				:=			Center
+	global scriptName 	:= 			"VisualDrives" 
+	global scriptConfig	:=			"Visual_Config.ini"
+	global guiX		:=			Center
+	global guiY		:=			Center
 	global guiDockPadding	:=			5
 	global guiTransparency	:=			204
-	global guiTheme			:=			Plain
+	global guiTheme		:=			Plain
 	
 	; read in config values if available
+	; TODO add error checking function
 	IfExist %scriptConfig%
 	{
 		IniRead	guiX, %scriptConfig%, guiMyDrives, guiX
@@ -87,22 +90,22 @@ ShowGui:
 	
 	Gui, 1:	Destroy
 	Gui, 1: +LastFound -Caption +ToolWindow +hwndhMain
-	Gui, 1: Margin, 10, 10
-	Gui, 1: Color, 000000
-	Gui, 1: Font, 		cFFFFFF,	Consolas
-	Gui, 1: Add,		Text,		xm ym w80, %scriptName%
-	Gui, 1: Font,		c00FF00, 
-	Gui, 1: Add, 		Text,     	xm+60  yp w60 0x202, Used
-	Gui, 1: Font, 		cFFFFFF,
-	Gui, 1: Add, 		Text,     	xm+160 yp   w60 0x202, Total
+	Gui, 1: Margin,	10, 10
+	Gui, 1: Color, 	000000
+	Gui, 1: Font, 	cFFFFFF,	Consolas
+	Gui, 1: Add,	Text,		xm ym w80, %scriptName%
+	Gui, 1: Font,	c00FF00, 
+	Gui, 1: Add, 	Text,     	xm+60  yp w60 0x202, Used
+	Gui, 1: Font, 	cFFFFFF,
+	Gui, 1: Add, 	Text,     	xm+160 yp   w60 0x202, Total
 
-	Gui, 1: Add, 		Text,    	xm     y+3  w%guiControlWidth% h1 0x7
+	Gui, 1: Add, 	Text,    	xm     y+3  w%guiControlWidth% h1 0x7
 
-	Gui, 1: Font, 		cFFFFFF,
-	Gui, 1: Add, 		Text,    	xm     y+3 w30 0x200, Fixed:
+	Gui, 1: Font, 	cFFFFFF,
+	Gui, 1: Add, 	Text,    	xm     y+3 w30 0x200, Fixed:
 	
 	DriveGet, DrvLstFxd, List, FIXED
-	loop, Parse, DrvLstFxd
+	Loop, Parse, DrvLstFxd
 	{
 		Gui, 1: Font, 	cFFFFFF,
 		Gui, 1: Add, 	Text,    	xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
@@ -366,16 +369,16 @@ WM_DEVICECHANGE(wParam, lParam, msg, hwnd)
 EventExit:
 GuiClose:
 GuiEscape:
-		GuiControlGet, curPosition,,guiSlider
-		; capture GUI position and record it in INI
-		WinGetPos, 	guiX, guiY, , ,		%scriptName%
-		; do not allow GUI position to be negative
-		if (guiX > 0) and (guiY > 0)
-		{
-			IniWrite,		%guiX%,		%scriptConfig%,		guiMyDrives,		guiX
-			IniWrite,		%guiY%,		%scriptConfig%, 	guiMyDrives,		guiY
-		}
-		IniWrite,		%guiTransparency%, %scriptConfig%, guiMyDrives, guiTransparency
+	GuiControlGet, curPosition,,guiSlider
+	; capture GUI position and record it in INI
+	WinGetPos, 	guiX, guiY, , ,		%scriptName%
+	; do not allow GUI position to be negative
+	if (guiX > 0) and (guiY > 0)
+	{
+		IniWrite,	%guiX%,		%scriptConfig%,		guiMyDrives,		guiX
+		IniWrite,	%guiY%,		%scriptConfig%, 	guiMyDrives,		guiY
+	}
+		IniWrite,	%guiTransparency%, %scriptConfig%, guiMyDrives, guiTransparency
 ExitApp	
 	
 	
