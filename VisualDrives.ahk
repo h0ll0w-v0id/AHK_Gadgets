@@ -104,6 +104,8 @@ ShowGui:
 	Gui, 1: Font, 	cFFFFFF,
 	Gui, 1: Add, 	Text,    	xm     y+3 w30 0x200, Fixed:
 	
+	
+	; jNizM parse loops:
 	DriveGet, DrvLstFxd, List, FIXED
 	Loop, Parse, DrvLstFxd
 	{
@@ -183,7 +185,7 @@ ShowGui:
 	; WinSet, Transparent, %guiTransparency%, %scriptName%	
 	
 	; call function
-	updateTrans := UpdateTransparency(guiTransparency, scriptName)
+	updateTrans := Function_UpdateTransparency(guiTransparency, scriptName)
 	; catch error
 	If (!updateTrans)
 	{
@@ -195,10 +197,7 @@ ShowGui:
 		guiTransparency := updateTrans
 	}
 	
-	
-	
-
-	Return
+Return
 ; -----------------------------------
 ;	GuiContextMenu
 ; -----------------------------------	
@@ -210,7 +209,7 @@ Return
 ; -----------------------------------
 MenuHandler:
 	; call function
-	updateTrans := UpdateTransparency(A_ThisMenuItem, scriptName)
+	updateTrans := Function_UpdateTransparency(A_ThisMenuItem, scriptName)
 	; catch error
 	If (!updateTrans)
 	{
@@ -376,10 +375,10 @@ GuiEscape:
 	; do not allow GUI position to be negative
 	if (guiX > 0) and (guiY > 0)
 	{
-		IniWrite, %guiX%, %scriptConfig%, guiMyDrives, guiX
-		IniWrite, %guiY%, %scriptConfig%, guiMyDrives, guiY
+		IniWrite %, guiX, scriptConfig, scriptName, guiX
+		IniWrite %, guiY, scriptConfig, scriptName, guiY
 	}
-		IniWrite, %guiTransparency%, %scriptConfig%, guiMyDrives, guiTransparency
+		IniWrite %, guiTransparency, scriptConfig, scriptName, guiTransparency
 ExitApp	
 	
 	
