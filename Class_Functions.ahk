@@ -9,15 +9,15 @@
 	
 	Date		  Rev			Change Description
 	------------------------------------------------------------------------------------------------------------
-	07/23/14	1.0.0		Beta release
-	
+	07/28/14	1.0.0		Beta release
+		
 */	
 
 Function_Eject(Drive)
 {
 	try
 	{
-		
+
 		hVolume := DllCall("CreateFile"
 		    , Str, "\\.\" . Drive
 		    , UInt, 0x80000000 | 0x40000000  ; GENERIC_READ | GENERIC_WRITE
@@ -49,7 +49,7 @@ Function_IniRead(Filename, Section, Key, Default = 0)
 { 
   
   ; store ini value
-  returnVar := IniRead(Filename, Section, Key)
+  returnVar := IniRead, %Filename%, %Section%, %Key%
   ; check for error 
   if (returnVar == "ERROR")
   {
@@ -105,13 +105,13 @@ Function_GuiMove(Scriptname, xPos, yPos, xVirtual, yVirtual, wVirtual, hVirtual)
 ; -----------------------------------	
 Function_UpdateTransparency(transValue, winTitle, MyOpacityMenu="")
 {
-	
+
 	const20		:=			51
 	const40		:=			102	
 	const60		:=			153
 	const80		:=			204
 	const100	:=			255
-	
+
 	try
 	{
 		; allow parameter to contain hard coded or menu selected value
@@ -168,5 +168,3 @@ Function_UpdateTransparency(transValue, winTitle, MyOpacityMenu="")
 		Return 0
 	}
 }
-}
-
