@@ -29,8 +29,8 @@
 	SetWorkingDir %A_ScriptDir%
 	SetTitleMatchMode 2	
 	SetBatchLines -1
-	
-	#include <Class_Functions.ahk>
+
+	#include Class_Functions.ahk
 	
 	; set global defaults
 	global scriptName 	:= 	"VisualDrives" 
@@ -45,11 +45,11 @@
 	; TODO add error checking function
 	IfExist %scriptConfig%
 	{
-		IniRead	guiX, %scriptConfig%, guiMyDrives, guiX
-		IniRead	guiY, %scriptConfig%, guiMyDrives, guiY	
-		IniRead guiTransparency, %scriptConfig%, guiMyDrives, guiTransparency
+		IniRead	guiX, %scriptConfig%, %scriptName%, guiX
+		IniRead	guiY, %scriptConfig%, %scriptName%, guiY	
+		IniRead guiTransparency, %scriptConfig%, %scriptName%, guiTransparency
 	}
-		
+
 	global guiWidth		:=	400
 	global guiHeight	:=	200
 	global guiControlWidth	:=	( guiWidth - 30 )
@@ -87,7 +87,7 @@
 ;	ShowGui
 ; -----------------------------------	
 ShowGui:
-	
+
 	Gui, 1:	Destroy
 	Gui, 1: +LastFound -Caption +ToolWindow +hwndhMain
 	Gui, 1: Margin,	10, 10
@@ -120,11 +120,11 @@ ShowGui:
 		Gui, 1: Add, 	Text,     	xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
 		Gui, 1: Font, 	cFFFFFF s8,
 	}
-	
+
 	Gui, 1: Add, 		Text,     	xm     y+3  w%guiControlWidth% h1 0x7
 	Gui, 1: Font, 		cFFFFFF,
 	Gui, 1: Add, 		Text,     	xm     y+3 w30 0x200, Removable:
-	
+
 	DriveGet, DrvLstRmvbl, List, REMOVABLE
 	loop, Parse, DrvLstRmvbl
 	{
@@ -139,11 +139,11 @@ ShowGui:
 		Gui, 1: Add, Text,     xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
 		Gui, 1: Font, cFFFFFF s8,
 	}
-	
+
 	Gui, 1: Add, Text,     xm     y+3  w%guiControlWidth% h1 0x7
 	Gui, 1: Font, cFFFFFF,
 	Gui, 1: Add, Text,     xm     y+3 w30 0x200, Network:
-	
+
 	DriveGet, DrvLstNtwrk, List, NETWORK
 	loop, Parse, DrvLstNtwrk
 	{
@@ -166,9 +166,9 @@ ShowGui:
 
 	Gui, 1: Add, 		Button,   xm+290 yp   w60 h20 -Theme 0x8000 gEventExit, Close
 	; Gui, 1: Show, % "AutoSize" (htopx ? " x" htopx " y" htopy : ""), % scriptName
-	Gui, 1: Show,		AutoSize, % scriptName
+	; Gui, 1: Show,		AutoSize, % scriptName
 	Gui, 1: Show, 		% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
-	
+
 	SetTimer, UpdateDrive, -1000
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
@@ -196,7 +196,7 @@ ShowGui:
 	{
 		guiTransparency := updateTrans
 	}
-	
+
 Return
 ; -----------------------------------
 ;	GuiContextMenu
@@ -375,15 +375,8 @@ GuiEscape:
 	; do not allow GUI position to be negative
 	if (guiX > 0) and (guiY > 0)
 	{
-		IniWrite %, guiX, scriptConfig, scriptName, guiX
-		IniWrite %, guiY, scriptConfig, scriptName, guiY
+		IniWrite, %guiX%, %scriptConfig%, %scriptName%, guiX
+		IniWrite, %guiY%, %scriptConfig%, %scriptName%, guiY
 	}
-		IniWrite %, guiTransparency, scriptConfig, scriptName, guiTransparency
+		IniWrite, %guiTransparency%, %scriptConfig%, %scriptName%, guiTransparency
 ExitApp	
-	
-	
-	
-	
-	
-	
-	
