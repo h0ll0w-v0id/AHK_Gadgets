@@ -35,19 +35,38 @@
 	; set global defaults
 	global scriptName 	:= 	"VisualDrives" 
 	global scriptConfig	:=	"Visual_Config.ini"
-	global guiX		:=	Center
-	global guiY		:=	Center
-	global guiDockPadding	:=	5
+	global guiX	:=	Center
+	global guiY	:=	Center
 	global guiTransparency	:=	204
-	global guiTheme		:=	Plain
+	global guiAlwaysOnTop	:=	ON
 	
-	; read in config values if available
-	; TODO add error checking function
+	global guiDockPadding	:=	5
+	
+	; read in config values if available and not error
 	IfExist %scriptConfig%
 	{
-		IniRead	guiX, %scriptConfig%, %scriptName%, guiX
-		IniRead	guiY, %scriptConfig%, %scriptName%, guiY	
-		IniRead guiTransparency, %scriptConfig%, %scriptName%, guiTransparency
+		IniRead	tempX, %scriptConfig%, %scriptName%, guiX
+		If (tempX <> "ERROR")
+		{
+			guiX := tempX
+		}
+		IniRead	tempY, %scriptConfig%, %scriptName%, guiY
+		If (tempY <> "ERROR")
+		{
+			guiY := tempY
+		}
+		IniRead tempTransparency, %scriptConfig%, %scriptName%, guiTransparency
+		If (tempTransparency <> "ERROR")
+		{
+			guiTransparency := tempTransparency	
+		}
+		IniRead tempAlwaysOnTop, %scriptConfig%, %scriptName%, guiAlwaysOnTop
+		If (guiAlwaysOnTop <> "ERROR")
+		{
+			guiAlwaysOnTop := tempAlwaysOnTop	
+		}
+
+		tempX = tempY = tempTransparency = tempAlwaysOnTop = 
 	}
 
 	global guiWidth		:=	400
@@ -64,22 +83,20 @@
 	; left and top start from 0, so able to reuse var
 	global guiDockLeftTop	:=	guiDockPadding * 3
 	
+	; Always On Top Menu
+	Menu, MyAOTMenu, Add, ON, UpdateAOT
+	Menu, MyAOTMenu, Add, OFF, UpdateAOT
 	; Transparency Menu
-	Menu, MyOpacityMenu, Add, 20`%, MenuHandler
-	Menu, MyOpacityMenu, Add, 40`%, MenuHandler
-	Menu, MyOpacityMenu, Add, 60`%, MenuHandler
-	Menu, MyOpacityMenu, Add, 80`%, MenuHandler
-	Menu, MyOpacityMenu, Add, 100`%, MenuHandler
-	; Themes Menu
-	Menu, MyThemesMenu, Add, Alien Green, MenuHandler
-	Menu, MyThemesMenu, Add, Plain, MenuHandler
-	Menu, MyThemesMenu, Add, Cold Blue, MenuHandler
-	Menu, MyThemesMenu, Add, Burnt Red, MenuHandler
-	Menu, MyThemesMenu, Add, High Contrast, MenuHandler
+	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 80`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
 	; Main menu
-	Menu, MyContextMenu, Add, Always On Top, EventExit
+	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
+	Menu, MyContextMenu, Add
+	Menu, MyContextMenu, Add, Always On Top, :MyAOTMenu
 	Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
-	Menu, MyContextMenu, Add, Themes, :MyThemesMenu
 	Menu, MyContextMenu, Add
 	Menu, MyContextMenu, Add, Close, EventExit
 	
@@ -95,7 +112,7 @@ ShowGui:
 	Gui, 1: Font, 	cFFFFFF,	Consolas
 	Gui, 1: Add,	Text,		xm ym w80, %scriptName%
 	Gui, 1: Font,	c00FF00, 
-	Gui, 1: Add, 	Text,     	xm+60  yp w60 0x202, Used
+	Gui, 1: Add, 	Text,     	xm+80  yp w40 0x202, Used
 	Gui, 1: Font, 	cFFFFFF,
 	Gui, 1: Add, 	Text,     	xm+160 yp   w60 0x202, Total
 
@@ -106,6 +123,7 @@ ShowGui:
 	
 	
 	; jNizM parse loops:
+	; Fixed drives
 	DriveGet, DrvLstFxd, List, FIXED
 	Loop, Parse, DrvLstFxd
 	{
@@ -124,7 +142,7 @@ ShowGui:
 	Gui, 1: Add, 		Text,     	xm     y+3  w%guiControlWidth% h1 0x7
 	Gui, 1: Font, 		cFFFFFF,
 	Gui, 1: Add, 		Text,     	xm     y+3 w30 0x200, Removable:
-
+	; Removable drives
 	DriveGet, DrvLstRmvbl, List, REMOVABLE
 	loop, Parse, DrvLstRmvbl
 	{
@@ -143,7 +161,7 @@ ShowGui:
 	Gui, 1: Add, Text,     xm     y+3  w%guiControlWidth% h1 0x7
 	Gui, 1: Font, cFFFFFF,
 	Gui, 1: Add, Text,     xm     y+3 w30 0x200, Network:
-
+	; Network drives
 	DriveGet, DrvLstNtwrk, List, NETWORK
 	loop, Parse, DrvLstNtwrk
 	{
@@ -159,17 +177,8 @@ ShowGui:
 		Gui, 1: Font, cFFFFFF s8,
 	}
 
-	Gui, 1: Add, 		Text,     	xm y+3  w%guiControlWidth% h1 0x7
-	; Gui, 1: Font, 		c808080,
-	; Gui, 1:	Add,		Text,		xm yp+6 w120 h30 vguiPosition, Opacity`:
-	; Gui, 1: Add, 		Slider, 	xm+60 yp w100 h20 gEventUpdateTrans vguiSlider Thick10 Range50-255 ToolTip, %startPos%
-
-	Gui, 1: Add, 		Button,   xm+290 yp   w60 h20 -Theme 0x8000 gEventExit, Close
-	; Gui, 1: Show, % "AutoSize" (htopx ? " x" htopx " y" htopy : ""), % scriptName
-	; Gui, 1: Show,		AutoSize, % scriptName
+	Gui, 1: Add, 		Text,	xm y+3  w%guiControlWidth% h1 0x7
 	Gui, 1: Show, 		% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
-
-	SetTimer, UpdateDrive, -1000
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
 	OnMessage(0x219, "WM_DEVICECHANGE")
@@ -181,21 +190,10 @@ ShowGui:
 	regionHeight 			:= 			(guiHeight - 10)
 	WinSet, Region, 0-0 W%regionWidth% H%regionHeight% R30-30, %scriptName%	
 	
-	; set transparency		
-	; WinSet, Transparent, %guiTransparency%, %scriptName%	
-	
-	; call function
-	updateTrans := Function_UpdateTransparency(guiTransparency, scriptName)
-	; catch error
-	If (!updateTrans)
-	{
-		MsgBox % "Error updating " . A_ThisMenuItem . " with " . scriptName
-	}
-	; save value for ini
-	Else 
-	{
-		guiTransparency := updateTrans
-	}
+	SetTimer, UpdateDrive, -1000
+	SetTimer, UpdateAOT, -1000
+	SetTimer, UpdateTrans, -1000
+
 
 Return
 ; -----------------------------------
@@ -205,80 +203,57 @@ GuiContextMenu:
 	Menu, MyContextMenu, Show, %A_GuiX%, %A_GuiY%
 Return
 ; -----------------------------------
-;	MenuHandler
-; -----------------------------------
-MenuHandler:
-	; call function
-	updateTrans := Function_UpdateTransparency(A_ThisMenuItem, scriptName)
-	; catch error
-	If (!updateTrans)
-	{
-		MsgBox % "Error updating " . A_ThisMenuItem . " with " . scriptName
-	}
-	; save value for ini
-	Else 
-	{
-		guiTransparency := updateTrans
-	}
-	; MsgBox You selected %A_ThisMenuItem% from the menu %A_ThisMenu%. %scriptName%
-	; SubStr(A_GuiControl, 1)
+;	AddGadgets
+; -----------------------------------	
+AddGadgets:
+	Run https://github.com/h0ll0w-v0id/Gadgets
 Return
-/*
+
 ; -----------------------------------
-;	UpdateTransparency
-;	1st param: value of transparency
-;	2nd param: win title
+;	UpdateAOT
 ; -----------------------------------
-UpdateTransparency(transValue, winTitle)
-{
-	const20		:=			51
-	const40		:=			102	
-	const60		:=			153
-	const80		:=			204
-	const100	:=			255
-	
-	try
+UpdateAOT:
+	If (A_ThisMenuItem)
 	{
-		; allow parameter to contain hard coded or menu selected value
-		; enabling function to be called from gui or ini readback
-		If (transValue == "20%" or transValue == const20)
-		{
-			WinSet, Transparent, %const20%, %winTitle%
-			Menu, MyOpacityMenu, ToggleCheck, 20`%
-			Return % const20
-		}
-		If (transValue == "40%" or transValue == const40)
-		{
-			WinSet, Transparent, %const40%, %winTitle%
-			Menu, MyOpacityMenu, ToggleCheck, 40`%
-			Return % const40
-		}
-		If (transValue == "60%" or transValue == const60)
-		{
-			WinSet, Transparent, %const60%, %winTitle%
-			Menu, MyOpacityMenu, ToggleCheck, 60`%
-			Return % const60
-		}
-		If (transValue == "80%" or transValue == const80)
-		{
-			WinSet, Transparent, %const80%, %winTitle%
-			Menu, MyOpacityMenu, ToggleCheck, 80`%
-			Return % const80
-		}
-		If (transValue == "100%" or transValue == const100)
-		{
-			WinSet, Transparent, %const100%, %winTitle%
-			Menu, MyOpacityMenu, ToggleCheck, 100`%
-			Return % const100
-		}
+		newValue := A_ThisMenuItem
+		menuName := A_ThisMenu
 	}
-	; on error, return 0
-	catch
+	Else
 	{
-		Return 0
+		newValue := guiAlwaysOnTop
+		menuName := "MyAOTMenu"
 	}
-}
-*/
+	updateSuccess := Function_AlwaysOnTop(newValue, menuName, scriptName)
+	; if not error, save return var
+	If (updateSuccess <> 0)
+	{
+		guiAlwaysOnTop := updateSuccess
+	}
+	updateSuccess = newValue =
+Return
+; -----------------------------------
+;	UpdateTrans
+; -----------------------------------
+UpdateTrans:
+	If (A_ThisMenuItem)
+	{
+		newValue := A_ThisMenuItem
+		menuName := A_ThisMenu
+	}
+	Else
+	{
+		newValue := guiTransparency
+		menuName := "MyOpacityMenu"
+	}
+	updateSuccess := Function_UpdateTransparency(newValue, menuName, scriptName)
+	; if not error, save return var
+	If (updateSuccess <> 0)
+	{
+		guiTransparency := updateSuccess
+	}
+	updateSuccess = newValue = 
+Return
+
 ; -----------------------------------
 ; 	UpdateDrive
 ;	Desc: 
@@ -326,7 +301,7 @@ UpdateDrive:
         GuiControl,, D%k%3, % used%k%
         GuiControl,, D%k%4, % (varPerc = "1") ? Round(perc%k%, 2) " % " : ""
     }
-    SetTimer, UpdateDrive, 5000
+   ; SetTimer, UpdateDrive, 5000
 Return
 ; -----------------------------------
 ;	DriveClick
@@ -357,14 +332,14 @@ WM_DEVICECHANGE(wParam, lParam, msg, hwnd)
     if (wParam = 0x8000 || wParam = 0x8004)
     {
         Thread, NoTimers
-        WinGetPos, htopx, htopy,,, ahk_id %hmain%
+        ; WinGetPos, htopx, htopy,,, ahk_id %hmain%
         ; Gui, 1: Destroy
         Gosub, ShowGui
     }
 }
 ; -----------------------------------
 ;	EventExit
-;	Desc: saves gadget position, transparency, theme
+;	Desc: saves script vars
 ; -----------------------------------
 EventExit:
 GuiClose:
@@ -379,4 +354,6 @@ GuiEscape:
 		IniWrite, %guiY%, %scriptConfig%, %scriptName%, guiY
 	}
 		IniWrite, %guiTransparency%, %scriptConfig%, %scriptName%, guiTransparency
+		IniWrite, %guiAlwaysOnTop%, %scriptConfig%, %scriptName%, guiAlwaysOnTop
+		
 ExitApp	
