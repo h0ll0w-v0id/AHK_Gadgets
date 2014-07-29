@@ -8,11 +8,16 @@
 	Revision History:
 	
 	Date		  Rev			Change Description
-	------------------------------------------------------------------------------------------------------------
+	--------------------------------------------------------
 	07/28/14	1.0.0		Beta release
 		
 */	
-
+; -----------------------------------
+;	Function_Eject
+;
+;	Params: 
+;		Drive = Drive Letter
+; -----------------------------------	
 Function_Eject(Drive)
 {
 	try
@@ -42,25 +47,122 @@ Function_Eject(Drive)
 		Return 0
 	}
 }
+
 ; -----------------------------------
-;	Function_IniRead
-; -----------------------------------	
-Function_IniRead(Filename, Section, Key, Default = 0)
-{ 
-  
-  ; store ini value
-  returnVar := IniRead, %Filename%, %Section%, %Key%
-  ; check for error 
-  if (returnVar == "ERROR")
-  {
-    Return 0
-  }
-  ; return ini value
-  else 
-  {
-    Return returnVar
-  }  
+;	Function_AlwaysOnTop
+;	
+;	Params:
+;		newValue = TRUE | FALSE
+;		menuName = Referencing Menu Name
+;		winTitle = Referencing GUI Name
+; -----------------------------------
+Function_AlwaysOnTop(newValue, menuName, winTitle)
+{
+	Try
+	{
+		If (newValue == "ON")
+		{
+			WinSet, AlwaysOnTop, ON, %winTitle%
+			Menu, %menuName%, Check, ON	
+			Menu, %menuName%, Uncheck, OFF			
+			Return % newValue
+		}
+		Else
+		{
+			WinSet, AlwaysOnTop, OFF, %winTitle%
+			Menu, %menuName%, Uncheck, ON				
+			Menu, %menuName%, Check, OFF
+			Return % newValue
+		}		
+	}
+	; on error, return 0
+	Catch
+	{
+		Return 0
+	}
+
 }
+; -----------------------------------
+;	Function_UpdateTransparency
+;
+;	Params:
+;		newValue = TRUE | FALSE
+;		menuName = Referencing Menu Name
+;		winTitle = Referencing GUI Name
+; -----------------------------------	
+Function_UpdateTransparency(newValue, menuName, winTitle)
+{
+
+	const20	:=	51
+	const40	:=	102	
+	const60	:=	153
+	const80	:=	204
+	const100	:=	255
+
+	Try
+	{
+		If (newValue == "20%" or newValue == const20)
+		{
+			WinSet, Transparent, %const20%, %winTitle%
+			Menu, %menuName%, Check, 20`%
+			Menu, %menuName%, Uncheck, 40`%	
+			Menu, %menuName%, Uncheck, 60`%	
+			Menu, %menuName%, Uncheck, 80`%	
+			Menu, %menuName%, Uncheck, 100`%	
+			Return % const20
+		}
+		If (newValue == "40%" or newValue == const40)
+		{
+			WinSet, Transparent, %const40%, %winTitle%
+			Menu, %menuName%, Uncheck, 20`%
+			Menu, %menuName%, Check, 40`%	
+			Menu, %menuName%, Uncheck, 60`%	
+			Menu, %menuName%, Uncheck, 80`%	
+			Menu, %menuName%, Uncheck, 100`%	
+			Return % const40
+		}
+		If (newValue == "60%" or newValue == const60)
+		{
+			WinSet, Transparent, %const60%, %winTitle%
+			Menu, %menuName%, Uncheck, 20`%
+			Menu, %menuName%, Uncheck, 40`%	
+			Menu, %menuName%, Check, 60`%	
+			Menu, %menuName%, Uncheck, 80`%	
+			Menu, %menuName%, Uncheck, 100`%	
+			Return % const60
+		}
+		If (newValue == "80%" or newValue == const80)
+		{
+			WinSet, Transparent, %const80%, %winTitle%
+			Menu, %menuName%, Uncheck, 20`%
+			Menu, %menuName%, Uncheck, 40`%	
+			Menu, %menuName%, Uncheck, 60`%	
+			Menu, %menuName%, Check, 80`%	
+			Menu, %menuName%, Uncheck, 100`%			
+			Return % const80
+		}
+		If (newValue == "100%" or newValue == const100)
+		{
+			WinSet, Transparent, %const100%, %winTitle%
+			Menu, %menuName%, Uncheck, 20`%
+			Menu, %menuName%, Uncheck, 40`%	
+			Menu, %menuName%, Uncheck, 60`%	
+			Menu, %menuName%, Uncheck, 80`%	
+			Menu, %menuName%, Check, 100`%
+			Return % const100
+		}
+	}
+	; on error, return 0
+	Catch
+	{
+		Return 0
+	}
+	const20 = const40 = const60 = const80 = const100 =
+}
+
+
+; \/ TBD
+
 
 ; -----------------------------------
 ;	Function_GuiMove
@@ -97,74 +199,5 @@ Function_GuiMove(Scriptname, xPos, yPos, xVirtual, yVirtual, wVirtual, hVirtual)
 			y1 := guiDockLeftTop
 		}
 		WinMove, %scriptName%,,x1,y1
-	}
-}
-
-; -----------------------------------
-;	Function_UpdateTransparency
-; -----------------------------------	
-Function_UpdateTransparency(transValue, winTitle, MyOpacityMenu="")
-{
-
-	const20		:=			51
-	const40		:=			102	
-	const60		:=			153
-	const80		:=			204
-	const100	:=			255
-
-	try
-	{
-		; allow parameter to contain hard coded or menu selected value
-		; enabling function to be called from gui or ini readback
-		If (transValue == "20%" or transValue == const20)
-		{
-			WinSet, Transparent, %const20%, %winTitle%
-			If !(MyOpacityMenu)
-			{
-			  Menu, MyOpacityMenu, ToggleCheck, 20`%
-			}
-			Return % const20
-		}
-		If (transValue == "40%" or transValue == const40)
-		{
-			WinSet, Transparent, %const40%, %winTitle%
-			If !(MyOpacityMenu)
-			{
-				Menu, MyOpacityMenu, ToggleCheck, 40`%
-			}
-			Return % const40
-		}
-		If (transValue == "60%" or transValue == const60)
-		{
-			WinSet, Transparent, %const60%, %winTitle%
-			If !(MyOpacityMenu)
-			{
-				Menu, MyOpacityMenu, ToggleCheck, 60`%
-			}
-			Return % const60
-		}
-		If (transValue == "80%" or transValue == const80)
-		{
-			WinSet, Transparent, %const80%, %winTitle%
-			If !(MyOpacityMenu)
-			{
-				Menu, MyOpacityMenu, ToggleCheck, 80`%
-			}
-			Return % const80
-		}
-		If (transValue == "100%" or transValue == const100)
-		{
-			WinSet, Transparent, %const100%, %winTitle%
-			If !(MyOpacityMenu)
-			{
-				Menu, MyOpacityMenu, ToggleCheck, 100`%
-			}
-			Return % const100
-		}
-	}
-	; on error, return 0
-	catch
-	{
-		Return 0
 	}
 }
