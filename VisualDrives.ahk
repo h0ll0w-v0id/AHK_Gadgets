@@ -29,7 +29,8 @@
 	SetWorkingDir %A_ScriptDir%
 	SetTitleMatchMode 2	
 	SetBatchLines -1
-
+	
+	; requires Class_Functions.ahk from https://github.com/h0ll0w-v0id/Gadgets
 	#include Class_Functions.ahk
 	
 	; set global defaults
