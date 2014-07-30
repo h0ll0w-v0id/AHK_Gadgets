@@ -201,3 +201,19 @@ Function_GuiMove(Scriptname, xPos, yPos, xVirtual, yVirtual, wVirtual, hVirtual)
 		WinMove, %scriptName%,,x1,y1
 	}
 }
+
+
+; from jNizM 
+; http://ahkscript.org/boards/viewtopic.php?f=5&t=4112
+EmptyClipboard()
+{
+    DllCall("User32.dll\EmptyClipboard")
+}
+OpenClipboard(hWndNewOwner = 0)
+{
+    DllCall("User32.dll\OpenClipboard", "Ptr", hWndNewOwner)
+}
+CloseClipboard()
+{
+    DllCall("User32.dll\CloseClipboard")
+}
