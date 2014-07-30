@@ -29,11 +29,13 @@
 	SetWorkingDir %A_ScriptDir%
 	SetTitleMatchMode 2	
 	SetBatchLines -1
-	
-	; requires Class_Functions.ahk from https://github.com/h0ll0w-v0id/Gadgets
+
+	; found here https://github.com/h0ll0w-v0id/Gadgets
 	#include Class_Functions.ahk
-	
-	; set global defaults
+
+	; -----------------------------------
+	;	Script Globals
+	; -----------------------------------
 	global scriptName 	:= 	"VisualDrives" 
 	global scriptConfig	:=	"Visual_Config.ini"
 	global guiX	:=	Center
@@ -41,9 +43,9 @@
 	global guiTransparency	:=	204
 	global guiAlwaysOnTop	:=	ON
 	
-	global guiDockPadding	:=	5
-	
-	; read in config values if available and not error
+	; -----------------------------------
+	;	Read in Config values (if available)
+	; -----------------------------------
 	IfExist %scriptConfig%
 	{
 		IniRead	tempX, %scriptConfig%, %scriptName%, guiX
@@ -70,11 +72,13 @@
 		tempX = tempY = tempTransparency = tempAlwaysOnTop = 
 	}
 
+	; -----------------------------------
+	;	GUI Position Variables
+	; -----------------------------------
+	global guiDockPadding	:=	5
 	global guiWidth		:=	400
 	global guiHeight	:=	200
 	global guiControlWidth	:=	( guiWidth - 30 )
-
-	; obs this??
 	; get multiple display resolution
 	SysGet, virtualWidth, 78
 	SysGet, virtualHeight, 79
@@ -84,16 +88,16 @@
 	; left and top start from 0, so able to reuse var
 	global guiDockLeftTop	:=	guiDockPadding * 3
 	
-	; Always On Top Menu
+	; -----------------------------------
+	;	GUI Right Click Menu
+	; -----------------------------------		
 	Menu, MyAOTMenu, Add, ON, UpdateAOT
 	Menu, MyAOTMenu, Add, OFF, UpdateAOT
-	; Transparency Menu
 	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
 	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
 	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
 	Menu, MyOpacityMenu, Add, 80`%, UpdateTrans
 	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
-	; Main menu
 	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
 	Menu, MyContextMenu, Add
 	Menu, MyContextMenu, Add, Always On Top, :MyAOTMenu
@@ -102,7 +106,7 @@
 	Menu, MyContextMenu, Add, Close, EventExit
 	
 ; -----------------------------------
-;	ShowGui
+;	GUI Display
 ; -----------------------------------	
 ShowGui:
 
@@ -214,18 +218,20 @@ Return
 ;	UpdateAOT
 ; -----------------------------------
 UpdateAOT:
+	; if label called from a menu
 	If (A_ThisMenuItem)
 	{
 		newValue := A_ThisMenuItem
 		menuName := A_ThisMenu
 	}
+	; else, use variables to pass to the function
 	Else
 	{
 		newValue := guiAlwaysOnTop
 		menuName := "MyAOTMenu"
 	}
 	updateSuccess := Function_AlwaysOnTop(newValue, menuName, scriptName)
-	; if not error, save return var
+	; if not error, save return variables
 	If (updateSuccess <> 0)
 	{
 		guiAlwaysOnTop := updateSuccess
@@ -236,18 +242,20 @@ Return
 ;	UpdateTrans
 ; -----------------------------------
 UpdateTrans:
+	; if label called from a menu
 	If (A_ThisMenuItem)
 	{
 		newValue := A_ThisMenuItem
 		menuName := A_ThisMenu
 	}
+	; else, use variables to pass to the function
 	Else
 	{
 		newValue := guiTransparency
 		menuName := "MyOpacityMenu"
 	}
 	updateSuccess := Function_UpdateTransparency(newValue, menuName, scriptName)
-	; if not error, save return var
+	; if not error, save return variables
 	If (updateSuccess <> 0)
 	{
 		guiTransparency := updateSuccess
