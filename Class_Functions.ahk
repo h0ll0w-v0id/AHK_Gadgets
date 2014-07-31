@@ -40,10 +40,18 @@ Function_Eject(Drive)
 		        , UInt, 0)
 		    DllCall("CloseHandle", UInt, hVolume)
 		}
+		MsgBox, 8256, Safely Remove Hardware and Eject Media, 
+		(
+		The `"%Drive%`" device can now be safely removed from the computer.
+		)
 		Return 1
 	}
 	catch
 	{
+		MsgBox, 8256, Safely Remove Hardware and Eject Media, 
+		(
+		The `"%Drive%`" device was unable to be removed`, ensure no programs are accessing it and try agian.
+		)
 		Return 0
 	}
 }
@@ -201,7 +209,6 @@ Function_GuiMove(Scriptname, xPos, yPos, xVirtual, yVirtual, wVirtual, hVirtual)
 		WinMove, %scriptName%,,x1,y1
 	}
 }
-
 
 ; from jNizM 
 ; http://ahkscript.org/boards/viewtopic.php?f=5&t=4112
