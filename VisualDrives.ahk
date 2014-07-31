@@ -157,9 +157,11 @@ ShowGui:
 		Gui, 1: Add, Text,     xm+40  yp w80 0x202 vD%A_Loopfield%1,
 		Gui, 1: Font, cFFFFFF,
 		Gui, 1: Add, Text,     xm+140 yp w80 0x202 vD%A_Loopfield%2,
-		Gui, 1: Add, Progress, xm+250 yp+1 w100 h10 vD%A_Loopfield%3,
+		Gui, 1: Add, Progress, xm+250 yp+1 w70 h10 vD%A_Loopfield%3,
 		Gui, 1: Font, c000000 s7,
-		Gui, 1: Add, Text,     xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
+		Gui, 1: Add, Text,     xm+250 yp w70 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
+		Gui, 1: Font, cFFFFFF s7,
+		Gui, 1: Add, Text,     xm+320 yp w30 0x202 v%A_Loopfield% gDriveEject, Eject
 		Gui, 1: Font, cFFFFFF s8,
 	}
 
@@ -312,6 +314,15 @@ UpdateDrive:
     }
    ; SetTimer, UpdateDrive, 5000
 Return
+; -----------------------------------
+;	DriveEject
+;	Desc: run each drive letter
+; -----------------------------------
+DriveEject:
+	tmpVar := A_GuiControl . ":"
+	Function_Eject(tmpVar)
+Return
+
 ; -----------------------------------
 ;	DriveClick
 ;	Desc: run each drive letter
