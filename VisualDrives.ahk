@@ -197,9 +197,9 @@ ShowGui:
 	regionHeight 			:= 			(guiHeight - 10)
 	WinSet, Region, 0-0 W%regionWidth% H%regionHeight% R30-30, %scriptName%	
 	
-	SetTimer, UpdateDrive, -1000
-	SetTimer, UpdateAOT, -1000
-	SetTimer, UpdateTrans, -1000
+	SetTimer, UpdateDrive, -250
+	SetTimer, UpdateAOT, -250
+	SetTimer, UpdateTrans, -250
 
 
 Return
@@ -320,7 +320,15 @@ Return
 ; -----------------------------------
 DriveEject:
 	tmpVar := A_GuiControl . ":"
-	Function_Eject(tmpVar)
+	ejectSuccess := Function_Eject(tmpVar)
+	If !(ejectSuccess)
+	{
+		MsgBox, 8256, Safely Remove Hardware and Eject Media, 
+		(
+		Storage device `"%Drive%`" was unable to be ejected`, ensure no programs are accessing it and try again.
+		)
+	}
+	GoSub, ShowGui
 Return
 
 ; -----------------------------------
