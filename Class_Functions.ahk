@@ -39,19 +39,14 @@ Function_Eject(Drive)
 		        , UIntP, dwBytesReturned  ; Unused.
 		        , UInt, 0)
 		    DllCall("CloseHandle", UInt, hVolume)
+
 		}
-		MsgBox, 8256, Safely Remove Hardware and Eject Media, 
-		(
-		The `"%Drive%`" device can now be safely removed from the computer.
-		)
+
 		Return 1
 	}
 	catch
 	{
-		MsgBox, 8256, Safely Remove Hardware and Eject Media, 
-		(
-		The `"%Drive%`" device was unable to be removed`, ensure no programs are accessing it and try agian.
-		)
+
 		Return 0
 	}
 }
