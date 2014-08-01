@@ -37,6 +37,7 @@
 	;	Script Globals
 	; -----------------------------------
 	global scriptName 	:= 	"VisualDrives" 
+	global scriptVersion :=	"1.0.0"
 	global scriptConfig	:=	"Visual_Config.ini"
 	global guiX	:=	Center
 	global guiY	:=	Center
@@ -114,34 +115,35 @@ ShowGui:
 	Gui, 1: +LastFound -Caption +ToolWindow +hwndhMain
 	Gui, 1: Margin,	10, 10
 	Gui, 1: Color, 	000000
-	Gui, 1: Font, 	cFFFFFF,	Consolas
-	Gui, 1: Add,	Text,		xm ym w80, %scriptName%
+	Gui, 1: Font, 	cC0C0C0,	Consolas
+	Gui, 1: Add,	Text,	xm ym w80, %scriptName%
 	Gui, 1: Font,	c00FF00, 
-	Gui, 1: Add, 	Text,     	xm+80  yp w40 0x202, Used
+	Gui, 1: Add, 	Text,	xm+80  yp w40 0x202, Used
 	Gui, 1: Font, 	cFFFFFF,
-	Gui, 1: Add, 	Text,     	xm+160 yp   w60 0x202, Total
-
-	Gui, 1: Add, 	Text,    	xm     y+3  w%guiControlWidth% h1 0x7
+	Gui, 1: Add, 	Text,	xm+160 yp   w60 0x202, Total
+	Gui, 1: Font, 	cC0C0C0,
+	Gui, 1: Add,	Text,	xm+250 yp w100 h10, Version %scriptVersion%
+	Gui, 1: Font, 	cFFFFFF,
+	Gui, 1: Add, 	Text,	xm y+3 w%guiControlWidth% h1 0x7
 
 	Gui, 1: Font, 	cFFFFFF,
-	Gui, 1: Add, 	Text,    	xm     y+3 w30 0x200, Fixed:
-	
+	Gui, 1: Add, 	Text,	xm y+3 w30 0x200, Fixed:
 	
 	; jNizM parse loops:
 	; Fixed drives
 	DriveGet, DrvLstFxd, List, FIXED
 	Loop, Parse, DrvLstFxd
 	{
-		Gui, 1: Font, 	cFFFFFF,
-		Gui, 1: Add, 	Text,    	xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
-		Gui, 1: Font, 	c00FF00,
-		Gui, 1: Add, 	Text,    	xm+40  yp w80 0x202 vD%A_Loopfield%1,
-		Gui, 1: Font, 	cFFFFFF,
-		Gui, 1: Add, 	Text,     	xm+140 yp w80 0x202 vD%A_Loopfield%2,
-		Gui, 1: Add, 	Progress, 	xm+250 yp+1 w100 h10 vD%A_Loopfield%3,
-		Gui, 1: Font, 	c000000 s7,
-		Gui, 1: Add, 	Text,     	xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font, 	cFFFFFF s8,
+		Gui, 1: Font,	cFFFFFF,
+		Gui, 1: Add,	Text,    	xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
+		Gui, 1: Font,	c00FF00,
+		Gui, 1: Add,	Text,    	xm+40  yp w80 0x202 vD%A_Loopfield%1,
+		Gui, 1: Font,	cFFFFFF,
+		Gui, 1: Add,	Text,     	xm+140 yp w80 0x202 vD%A_Loopfield%2,
+		Gui, 1: Add,	Progress, 	xm+250 yp+1 w100 h10 vD%A_Loopfield%3,
+		Gui, 1: Font,	c000000 s7,
+		Gui, 1: Add,	Text,     	xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
+		Gui, 1: Font,	cFFFFFF s8,
 	}
 
 	Gui, 1: Add, 		Text,     	xm     y+3  w%guiControlWidth% h1 0x7
