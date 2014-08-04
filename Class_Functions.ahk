@@ -50,7 +50,30 @@ Function_Eject(Drive)
 		Return 0
 	}
 }
+; -----------------------------------
+;	Function_UpdateRegion
+;	
+;	Params:
+;		regionW = 
+;		regionH = 
+;		winTitle = Referencing GUI Name
+; -----------------------------------
+Function_UpdateRegion(regionW, regionH, winTitle)
+{
+	Try
+	{
+		WinGetPos,,,guiWidth,guiHeight,%winTitle%
+		WinSet, Region, 0-0 W%guiWidth% H%guiHeight% R%regionW%-%regionH%, %winTitle%	
+	
+		Return 1
+	}
+	; on error, return 0
+	Catch
+	{
+		Return 0
+	}
 
+}
 ; -----------------------------------
 ;	Function_AlwaysOnTop
 ;	
