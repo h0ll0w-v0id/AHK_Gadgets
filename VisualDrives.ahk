@@ -79,7 +79,7 @@
 	global guiDockPadding	:=	5
 	global guiWidth		:=	400
 	global guiHeight	:=	200
-	global guiControlWidth	:=	( guiWidth - 30 )
+	global guiControlWidth	:=	( guiWidth - 60 )
 	; get multiple display resolution
 	SysGet, virtualWidth, 78
 	SysGet, virtualHeight, 79
@@ -186,19 +186,23 @@ ShowGui:
 		Gui, 1: Font, cFFFFFF s8,
 	}
 
-	Gui, 1: Add, 		Text,	xm y+3  w%guiControlWidth% h1 0x7
+	; Gui, 1: Add, 		Text,	xm y+3  w%guiControlWidth% h1 0x7
 	Gui, 1: Show, 		% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
 	OnMessage(0x219, "WM_DEVICECHANGE")
 
+	
+	/*
 	; add to Themes??
 	; overlay rounded corner region based on current gui width/height
 	WinGetPos,,,guiWidth,guiHeight,%scriptName%
 	regionWidth 			:= 			(guiWidth - 10)
 	regionHeight 			:= 			(guiHeight - 10)
 	WinSet, Region, 0-0 W%regionWidth% H%regionHeight% R30-30, %scriptName%	
+	*/
 	
+	SetTimer, UpdateRegion, -250
 	SetTimer, UpdateDrive, -250
 	SetTimer, UpdateAOT, -250
 	SetTimer, UpdateTrans, -250
@@ -217,7 +221,12 @@ Return
 AddGadgets:
 	Run https://github.com/h0ll0w-v0id/Gadgets
 Return
-
+; -----------------------------------
+;	UpdateRegion
+; -----------------------------------
+UpdateRegion:
+	updateSuccess := Function_UpdateRegion(30, 30, scriptName)
+Return
 ; -----------------------------------
 ;	UpdateAOT
 ; -----------------------------------
