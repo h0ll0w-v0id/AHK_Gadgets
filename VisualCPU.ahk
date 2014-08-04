@@ -68,7 +68,7 @@
 	global guiDockPadding	:=	5
 	global guiWidth		:=	400
 	global guiHeight	:=	200
-	global guiControlWidth	:=	( guiWidth - 30 )
+	global guiControlWidth	:=	( guiWidth - 60 )
 	; get multiple display resolution
 	SysGet, virtualWidth, 78
 	SysGet, virtualHeight, 79
@@ -114,6 +114,8 @@ ShowGui:
 	Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7	
 	GuiControl,, CPU1, 
 
+	
+	/*
 	Loop, % 11 + ( Y := 15 ) - 15 ; Loop 11 times 
 	{
 		Gui, 1: Add,	Text,	xm y+1  w22 h10 0x200 Right, % 125 - (Y += 10) ; %y%
@@ -125,23 +127,33 @@ ShowGui:
 	Gui, 1: Add, 		Text, 		% "xm+25 ym+20 w" ( GraphW + 2 ) " h" ( GraphH + 2 ) " 0x1000" ; SS_SUNKEN := 0x1000
 	Gui, 1: Add, 		Text, 		xp+1 ym+20 w%GraphW% h%GraphH% hwndhGraph gXGraph_GetVal 0xE, pGraph
 	pGraph := XGraph( hGraph, hBM, ColumnW, "1,10,0,10", 0x00FF00, 1, True )
+*/
 
-	Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7
+
+
+	Gui, Add, Text, xm+1 y+3 w350 h100 hwndhGraph, pGraph 
+	pGraph := XGraph( hGraph, 0x000000, 1, "5,5,5,5", 0x00FF00 )
+
+	; Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7
 	Gui, 1: Show,	% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
 	OnMessage(0xF, "WM_PAINT")
 
+	/*
 	; overlay rounded corner region based on current gui width/height
 	WinGetPos,,,guiWidth,guiHeight,%scriptName%
 	regionWidth 			:= 			(guiWidth - 10)
 	regionHeight 			:= 			(guiHeight - 10)
 	WinSet, Region, 0-0 W%regionWidth% H%regionHeight% R30-30, %scriptName%	
+	*/
 	
+	
+	SetTimer, UpdateRegion, -250
 	SetTimer, UpdateAOT, -250
 	SetTimer, UpdateTrans, -250
-	SetTimer, UpdateCPULoad, -1000
-	SetTimer, XGraph_Plot, 1500
+	; SetTimer, UpdateCPULoad, -1000
+	SetTimer, XGraph_Plot, 500
 
 Return
 ; -----------------------------------
@@ -156,7 +168,12 @@ Return
 AddGadgets:
 	Run https://github.com/h0ll0w-v0id/Gadgets
 Return
-
+; -----------------------------------
+;	UpdateRegion
+; -----------------------------------
+UpdateRegion:
+	updateSuccess := Function_UpdateRegion(30, 30, scriptName)
+Return
 ; -----------------------------------
 ;	UpdateAOT
 ; -----------------------------------
@@ -232,11 +249,6 @@ CPULoad()
 
 	Return ( ( SystemTime - IdleTime ) * 100 ) // SystemTime,    PIT := CIT,    PKT := CKT,    PUT := CUT 
 } 
-XGraph_GetVal:
-	Value := XGraph_GetVal( pGraph ) 
-	If ( Col := ErrorLevel )
-		SB_SetText( "`tColumn : " Col, 1 ), SB_SetText( "`tValue : " Value, 2 ) 
-Return
 
 XGraph_Paint:
 	Sleep -1
@@ -273,6 +285,7 @@ WM_LBUTTONDOWN(wParam, lParam, msg, hwnd)
 EventExit:
 GuiClose:
 GuiEscape:
+	pGraph := XGraph_Detach( pGraph )
 	GuiControlGet, curPosition,,guiSlider
 	; capture GUI position and record it in INI
 	WinGetPos, guiX, guiY, , , %scriptName%
