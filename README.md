@@ -5,7 +5,7 @@ AHK scripts that mimic Windows 7 Gadgets
 
 These scripts are built using AutoHotkey: http://ahkscript.org/
 
-VisualDrives.ahk:
+VisualDrives.ahk: https://github.com/h0ll0w-v0id/Gadgets/blob/master/VisualCPU.ahk
 
 => Built with AHK 1.1.14.04 running on Windows 7
 
