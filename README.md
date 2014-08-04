@@ -11,7 +11,7 @@ VisualDrives.ahk: https://github.com/h0ll0w-v0id/Gadgets/blob/master/VisualCPU.a
 
 => Requires Class_Functions.ahk to be in the same directory to compile
 
-VisualCPU.ahk:
+VisualCPU.ahk: https://github.com/h0ll0w-v0id/Gadgets/blob/master/VisualCPU.ahk
 
 => Built with AHK 1.1.14.04 running on Windows 7
 
