@@ -95,10 +95,10 @@ ShowGui:
 	Gui, 1: Add,	Text,	xm ym w80, %scriptName%
 	Gui, 1: Add,	Text,	xm+250 yp w100 h10, Version %scriptVersion%
 	Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7	
-	Gui, 1: Add,	Text,	xm y+3 w40 h10, 100 `%
-	Gui, 1: Add,	Text,	xm y+95 w40 h10, 0 `%
+	Gui, 1: Add,	Text,	xm y+3 w40 h10, 100 -
+	Gui, 1: Add,	Text,	xm y+95 w40 h10, 0 -
 	Gui, 1: Add,	Text,	xm+40 ym+20 w310 h111 hwndhGraph, pGraph 
-	pGraph := XGraph( hGraph, 0x000044, 1, "5,5,5,5", 0x8080FF )
+	pGraph := XGraph( hGraph, 0x000000, 1, "5,5,5,5", 0x8080FF )
 	Gui, 1: Show,	% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
