@@ -29,10 +29,13 @@
 	global scriptConfig	:=	"Visual_Config.ini"
 	global guiX	:=	Center
 	global guiY	:=	Center
-	global guiTransparency	:=	204
+	global guiWidth		:=	400
+	global guiHeight	:=	200
+	global guiRegion	:=	30
+	global guiControlWidth	:=	( guiWidth - ( guiRegion * 2) )
 	global guiAlwaysOnTop	:=	ON
-	
-	EnvGet, ProcessorCount, NUMBER_OF_PROCESSORS
+	global guiTransparency	:=	204
+
 	; -----------------------------------
 	;	Read in Config values (if available)
 	; -----------------------------------
@@ -48,41 +51,25 @@
 		{
 			guiY := tempY
 		}
+		IniRead tempAlwaysOnTop, %scriptConfig%, %scriptName%, guiAlwaysOnTop
+		If (tempAlwaysOnTop <> "ERROR")
+		{
+			guiAlwaysOnTop := tempAlwaysOnTop	
+		}
 		IniRead tempTransparency, %scriptConfig%, %scriptName%, guiTransparency
 		If (tempTransparency <> "ERROR")
 		{
 			guiTransparency := tempTransparency	
 		}
-		IniRead tempAlwaysOnTop, %scriptConfig%, %scriptName%, guiAlwaysOnTop
-		If (guiAlwaysOnTop <> "ERROR")
-		{
-			guiAlwaysOnTop := tempAlwaysOnTop	
-		}
 
-		tempX = tempY = tempTransparency = tempAlwaysOnTop = 
+		tempX = tempY = tempAlwaysOnTop = tempTheme = tempTransparency =
 	}
 
 	; -----------------------------------
-	;	GUI Position Variables
-	; -----------------------------------
-	global guiDockPadding	:=	5
-	global guiWidth		:=	400
-	global guiHeight	:=	200
-	global guiControlWidth	:=	( guiWidth - 60 )
-	; get multiple display resolution
-	SysGet, virtualWidth, 78
-	SysGet, virtualHeight, 79
-	; sets a docking edge 5 px from virtual desktop (for multiple displays)
-	global guiDockRight	:=	( virtualWidth - guiWidth - guiDockPadding )
-	global guiDockBottom	:=	( virtualHeight - guiHeight - guiDockPadding )
-	; left and top start from 0, so able to reuse var
-	global guiDockLeftTop	:=	guiDockPadding * 3
-	
-	; -----------------------------------
 	;	GUI Right Click Menu
 	; -----------------------------------		
-	Menu, MyAOTMenu, Add, ON, UpdateAOT
-	Menu, MyAOTMenu, Add, OFF, UpdateAOT
+	Menu, MyAlwaysOnTopMenu, Add, ON, UpdateAlwaysOnTop
+	Menu, MyAlwaysOnTopMenu, Add, OFF, UpdateAlwaysOnTop
 	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
 	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
 	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
@@ -90,7 +77,7 @@
 	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
 	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
 	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Always On Top, :MyAOTMenu
+	Menu, MyContextMenu, Add, Always On Top, :MyAlwaysOnTopMenu
 	Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
 	Menu, MyContextMenu, Add
 	Menu, MyContextMenu, Add, Close, EventExit
@@ -104,56 +91,23 @@ ShowGui:
 	Gui, 1: +LastFound -Caption +ToolWindow +hwndhMain
 	Gui, 1: Margin,	10, 10
 	Gui, 1: Color, 	000000
-	Gui, 1: Font, 	cC0C0C0,	Consolas
+	Gui, 1: Font, 	c663333,	Consolas
 	Gui, 1: Add,	Text,	xm ym w80, %scriptName%
-	Gui, 1: Font, 	cFFFFFF,
-	Gui, 1: Add, 	Text,	xm+60 yp w80 0x202 vCPU1,
-	Gui, 1: Font, 	cC0C0C0,
 	Gui, 1: Add,	Text,	xm+250 yp w100 h10, Version %scriptVersion%
-	Gui, 1: Font, 	cFFFFFF,
 	Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7	
-	GuiControl,, CPU1, 
-
-	
-	/*
-	Loop, % 11 + ( Y := 15 ) - 15 ; Loop 11 times 
-	{
-		Gui, 1: Add,	Text,	xm y+1  w22 h10 0x200 Right, % 125 - (Y += 10) ; %y%
-	}
-
-	ColumnW := 10
-
-	hBM := XGraph_MakeGrid(  ColumnW, 10, 33, 12, 0x008000, 0, GraphW, GraphH )
-	Gui, 1: Add, 		Text, 		% "xm+25 ym+20 w" ( GraphW + 2 ) " h" ( GraphH + 2 ) " 0x1000" ; SS_SUNKEN := 0x1000
-	Gui, 1: Add, 		Text, 		xp+1 ym+20 w%GraphW% h%GraphH% hwndhGraph gXGraph_GetVal 0xE, pGraph
-	pGraph := XGraph( hGraph, hBM, ColumnW, "1,10,0,10", 0x00FF00, 1, True )
-*/
-
-
-
-	Gui, Add, Text, xm+1 y+3 w350 h100 hwndhGraph, pGraph 
-	pGraph := XGraph( hGraph, 0x000000, 1, "5,5,5,5", 0x00FF00 )
-
-	; Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7
+	Gui, 1: Add,	Text,	xm y+3 w40 h10, 100 `%
+	Gui, 1: Add,	Text,	xm y+95 w40 h10, 0 `%
+	Gui, 1: Add,	Text,	xm+40 ym+20 w310 h111 hwndhGraph, pGraph 
+	pGraph := XGraph( hGraph, 0x000044, 1, "5,5,5,5", 0x8080FF )
 	Gui, 1: Show,	% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
 	OnMessage(0xF, "WM_PAINT")
 
-	/*
-	; overlay rounded corner region based on current gui width/height
-	WinGetPos,,,guiWidth,guiHeight,%scriptName%
-	regionWidth 			:= 			(guiWidth - 10)
-	regionHeight 			:= 			(guiHeight - 10)
-	WinSet, Region, 0-0 W%regionWidth% H%regionHeight% R30-30, %scriptName%	
-	*/
-	
-	
 	SetTimer, UpdateRegion, -250
-	SetTimer, UpdateAOT, -250
+	SetTimer, UpdateAlwaysOnTop, -250
 	SetTimer, UpdateTrans, -250
-	; SetTimer, UpdateCPULoad, -1000
-	SetTimer, XGraph_Plot, 500
+	SetTimer, XGraph_Plot, 1000
 
 Return
 ; -----------------------------------
@@ -172,12 +126,12 @@ Return
 ;	UpdateRegion
 ; -----------------------------------
 UpdateRegion:
-	updateSuccess := Function_UpdateRegion(30, 30, scriptName)
+	updateSuccess := Function_UpdateRegion(guiRegion, guiRegion, scriptName)
 Return
 ; -----------------------------------
-;	UpdateAOT
+;	UpdateAlwaysOnTop
 ; -----------------------------------
-UpdateAOT:
+UpdateAlwaysOnTop:
 	; if label called from a menu
 	If (A_ThisMenuItem)
 	{
@@ -188,7 +142,7 @@ UpdateAOT:
 	Else
 	{
 		newValue := guiAlwaysOnTop
-		menuName := "MyAOTMenu"
+		menuName := "MyAlwaysOnTopMenu"
 	}
 	updateSuccess := Function_AlwaysOnTop(newValue, menuName, scriptName)
 	; if not error, save return variables
@@ -299,5 +253,4 @@ GuiEscape:
 		IniWrite, %guiAlwaysOnTop%, %scriptConfig%, %scriptName%, guiAlwaysOnTop
 		
 ExitApp	
-	
-	
+
