@@ -90,15 +90,16 @@ ShowGui:
 	Gui, 1:	Destroy
 	Gui, 1: +LastFound -Caption +ToolWindow +hwndhMain
 	Gui, 1: Margin,	10, 10
-	Gui, 1: Color, 	000000
-	Gui, 1: Font, 	c663333,	Consolas
-	Gui, 1: Add,	Text,	xm ym w80, %scriptName%
+	Gui, 1: Color, 	c000000
+	Gui, 1: Font, 	c800080,	Consolas
+	Gui, 1: Add,	Text,	xm+30 ym w80, %scriptName%
 	Gui, 1: Add,	Text,	xm+250 yp w100 h10, Version %scriptVersion%
 	Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7	
-	Gui, 1: Add,	Text,	xm y+3 w40 h10, 100 -
-	Gui, 1: Add,	Text,	xm y+95 w40 h10, 0 -
-	Gui, 1: Add,	Text,	xm+40 ym+20 w310 h111 hwndhGraph, pGraph 
-	pGraph := XGraph( hGraph, 0x000000, 1, "5,5,5,5", 0x8080FF )
+
+	Gui, 1: Add,	Text,	xm y+100 w20 h10 vCPU1, 0`%
+	Gui, 1: Add, 	Text, 	xm+20 ym+0 w1 h125 0x7
+	Gui, 1: Add,	Text,	xm+21 ym+20 w320 h111 hwndhGraph, pGraph 
+	pGraph := XGraph( hGraph, 0x000000, 1, "5,5,5,5", 0xFF00FF )
 	Gui, 1: Show,	% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
@@ -107,6 +108,7 @@ ShowGui:
 	SetTimer, UpdateRegion, -250
 	SetTimer, UpdateAlwaysOnTop, -250
 	SetTimer, UpdateTrans, -250
+	SetTimer, UpdateCPULoad, -250
 	SetTimer, XGraph_Plot, 1000
 
 Return
@@ -182,14 +184,10 @@ Return
 ; thanks to jNizM
 ; http://ahkscript.org/boards/viewtopic.php?f=6&t=254
 UpdateCPULoad:
-    ; GuiControl,, CPU1, % GetProcessCount() " processes"
     CPU := CPULoad()
     GuiControl,, CPU1, % CPU "%"
-    ; GuiControl, % ((CPU <= "50") ? "+c00FF00" : ((CPU <= "80") ? "+cFFA500" : "+cFF0000")), CPU3
-    ; GuiControl,, CPU3, % CPU
-
 	SetTimer, UpdateCPULoad, 1000
-return
+Return
 
 
 CPULoad() 
