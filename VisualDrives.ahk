@@ -102,19 +102,17 @@ ShowGui:
 	Gui, 1:	Destroy
 	Gui, 1: +LastFound -Caption +ToolWindow +hwndhMain
 	Gui, 1: Margin,	10, 10
-	Gui, 1: Color, 	000000
-	Gui, 1: Font, 	cC0C0C0,	Consolas
+	Gui, 1: Color, 	c000000
+	Gui, 1: Font, 	c800080,	Consolas
 	Gui, 1: Add,	Text,	xm ym w80, %scriptName%
-	Gui, 1: Font,	c00FF00, 
+	Gui, 1: Font,	c800080, 
 	Gui, 1: Add, 	Text,	xm+80  yp w40 0x202, Used
-	Gui, 1: Font, 	cFFFFFF,
+	Gui, 1: Font, 	c800080,
 	Gui, 1: Add, 	Text,	xm+160 yp   w60 0x202, Total
-	Gui, 1: Font, 	cC0C0C0,
+	Gui, 1: Font, 	c800080,
 	Gui, 1: Add,	Text,	xm+250 yp w100 h10, Version %scriptVersion%
-	Gui, 1: Font, 	cFFFFFF,
+	Gui, 1: Font, 	c800080,
 	Gui, 1: Add, 	Text,	xm y+3 w%guiControlWidth% h1 0x7
-
-	Gui, 1: Font, 	cFFFFFF,
 	Gui, 1: Add, 	Text,	xm y+3 w30 0x200, Fixed:
 	
 	; jNizM parse loops:
@@ -122,56 +120,56 @@ ShowGui:
 	DriveGet, DrvLstFxd, List, FIXED
 	Loop, Parse, DrvLstFxd
 	{
-		Gui, 1: Font,	cFFFFFF,
+		Gui, 1: Font,	c800080,
 		Gui, 1: Add,	Text,    	xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
-		Gui, 1: Font,	c00FF00,
+		Gui, 1: Font,	cFF00FF,
 		Gui, 1: Add,	Text,    	xm+40  yp w80 0x202 vD%A_Loopfield%1,
-		Gui, 1: Font,	cFFFFFF,
+		Gui, 1: Font,	c800080,
 		Gui, 1: Add,	Text,     	xm+140 yp w80 0x202 vD%A_Loopfield%2,
 		Gui, 1: Add,	Progress, 	xm+250 yp+1 w100 h10 vD%A_Loopfield%3,
 		Gui, 1: Font,	c000000 s7,
 		Gui, 1: Add,	Text,     	xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font,	cFFFFFF s8,
+		Gui, 1: Font,	c800080 s8,
 	}
 
 	Gui, 1: Add, 		Text,     	xm     y+3  w%guiControlWidth% h1 0x7
-	Gui, 1: Font, 		cFFFFFF,
+	Gui, 1: Font, 		c800080,
 	Gui, 1: Add, 		Text,     	xm     y+3 w30 0x200, Removable:
 	; Removable drives
 	DriveGet, DrvLstRmvbl, List, REMOVABLE
 	loop, Parse, DrvLstRmvbl
 	{
-		Gui, 1: Font, cFFFFFF,
+		Gui, 1: Font, c800080,
 		Gui, 1: Add, Text,     xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
-		Gui, 1: Font, c00FF00,
+		Gui, 1: Font, cFF00FF,
 		Gui, 1: Add, Text,     xm+40  yp w80 0x202 vD%A_Loopfield%1,
-		Gui, 1: Font, cFFFFFF,
+		Gui, 1: Font, c800080,
 		Gui, 1: Add, Text,     xm+140 yp w80 0x202 vD%A_Loopfield%2,
 		Gui, 1: Add, Progress, xm+250 yp+1 w70 h10 vD%A_Loopfield%3,
 		Gui, 1: Font, c000000 s7,
 		Gui, 1: Add, Text,     xm+250 yp w70 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font, cFFFFFF s7,
+		Gui, 1: Font, c800080 s7,
 		Gui, 1: Add, Text,     xm+320 yp w30 0x202 v%A_Loopfield% gDriveEject, Eject
-		Gui, 1: Font, cFFFFFF s8,
+		Gui, 1: Font, c800080 s8,
 	}
 
 	Gui, 1: Add, Text,     xm     y+3  w%guiControlWidth% h1 0x7
-	Gui, 1: Font, cFFFFFF,
+	Gui, 1: Font, c800080,
 	Gui, 1: Add, Text,     xm     y+3 w30 0x200, Network:
 	; Network drives
 	DriveGet, DrvLstNtwrk, List, NETWORK
 	loop, Parse, DrvLstNtwrk
 	{
-		Gui, 1: Font, cFFFFFF,
+		Gui, 1: Font, c800080,
 		Gui, 1: Add, Text,     xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
-		Gui, 1: Font, c00FF00,
+		Gui, 1: Font, cFF00FF,
 		Gui, 1: Add, Text,     xm+40  yp w80 0x202 vD%A_Loopfield%1,
-		Gui, 1: Font, cFFFFFF,
+		Gui, 1: Font, c800080,
 		Gui, 1: Add, Text,     xm+140 yp w80 0x202 vD%A_Loopfield%2,
 		Gui, 1: Add, Progress, xm+250 yp+1 w100 h10 vD%A_Loopfield%3,
 		Gui, 1: Font, c000000 s7,
 		Gui, 1: Add, Text,     xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font, cFFFFFF s8,
+		Gui, 1: Font, c800080 s8,
 	}
 
 	Gui, 1: Show, 		% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
@@ -268,7 +266,7 @@ UpdateDrive:
         GuiControl,, D%i%1, % Round(used%i% / 1024, 2) " GB"
         GuiControl,, D%i%2, % Round(cap%i% / 1024, 2) " GB"
         GuiControl, % "+Range0-" cap%i%, D%i%3
-        GuiControl, % (perc%i% <= "80") ? "+c00FF00" : (perc%i% <= "90") ? "+cFFA500" : "+cFF0000", D%i%3
+        GuiControl, % (perc%i% <= "80") ? "+cFF00FF" : (perc%i% <= "90") ? "+cFFA500" : "+cFF0000", D%i%3
         GuiControl,, D%i%3, % used%i%
         GuiControl,, D%i%4, % (varPerc = "1") ? Round(perc%i%, 2) " % " : ""
     }
@@ -282,7 +280,7 @@ UpdateDrive:
         GuiControl,, D%j%1, % Round(used%j% / 1024, 2) " GB"
         GuiControl,, D%j%2, % Round(cap%j% / 1024, 2) " GB"
         GuiControl, % "+Range0-" cap%j%, D%j%3
-        GuiControl, % (perc%j% <= "80") ? "+c00FF00" : (perc%j% <= "90") ? "+cFFA500" : "+cFF0000", D%j%3
+        GuiControl, % (perc%j% <= "80") ? "+cFF00FF" : (perc%j% <= "90") ? "+cFFA500" : "+cFF0000", D%j%3
         GuiControl,, D%j%3, % used%j%
         GuiControl,, D%j%4, % (varPerc = "1") ? Round(perc%j%, 2) " % " : ""
     }
@@ -296,7 +294,7 @@ UpdateDrive:
         GuiControl,, D%k%1, % Round(used%k% / 1024, 2) " GB"
         GuiControl,, D%k%2, % Round(cap%k% / 1024, 2) " GB"
         GuiControl, % "+Range0-" cap%k%, D%k%3
-        GuiControl, % (perc%k% <= "80") ? "+c00FF00" : (perc%k% <= "90") ? "+cFFA500" : "+cFF0000", D%k%3
+        GuiControl, % (perc%k% <= "80") ? "+cFF00FF" : (perc%k% <= "90") ? "+cFFA500" : "+cFF0000", D%k%3
         GuiControl,, D%k%3, % used%k%
         GuiControl,, D%k%4, % (varPerc = "1") ? Round(perc%k%, 2) " % " : ""
     }
