@@ -41,6 +41,10 @@
 	global scriptConfig	:=	"Visual_Config.ini"
 	global guiX	:=	Center
 	global guiY	:=	Center
+	global guiWidth		:=	400
+	global guiHeight	:=	200
+	global guiRegion	:=	30
+	global guiControlWidth	:=	( guiWidth - ( guiRegion * 2) )
 	global guiTransparency	:=	204
 	global guiAlwaysOnTop	:=	ON
 	
@@ -59,41 +63,25 @@
 		{
 			guiY := tempY
 		}
+		IniRead tempAlwaysOnTop, %scriptConfig%, %scriptName%, guiAlwaysOnTop
+		If (tempAlwaysOnTop <> "ERROR")
+		{
+			guiAlwaysOnTop := tempAlwaysOnTop	
+		}
 		IniRead tempTransparency, %scriptConfig%, %scriptName%, guiTransparency
 		If (tempTransparency <> "ERROR")
 		{
 			guiTransparency := tempTransparency	
-		}
-		IniRead tempAlwaysOnTop, %scriptConfig%, %scriptName%, guiAlwaysOnTop
-		If (guiAlwaysOnTop <> "ERROR")
-		{
-			guiAlwaysOnTop := tempAlwaysOnTop	
 		}
 
 		tempX = tempY = tempTransparency = tempAlwaysOnTop = 
 	}
 
 	; -----------------------------------
-	;	GUI Position Variables
-	; -----------------------------------
-	global guiDockPadding	:=	5
-	global guiWidth		:=	400
-	global guiHeight	:=	200
-	global guiControlWidth	:=	( guiWidth - 60 )
-	; get multiple display resolution
-	SysGet, virtualWidth, 78
-	SysGet, virtualHeight, 79
-	; sets a docking edge 5 px from virtual desktop (for multiple displays)
-	global guiDockRight	:=	( virtualWidth - guiWidth - guiDockPadding )
-	global guiDockBottom	:=	( virtualHeight - guiHeight - guiDockPadding )
-	; left and top start from 0, so able to reuse var
-	global guiDockLeftTop	:=	guiDockPadding * 3
-	
-	; -----------------------------------
 	;	GUI Right Click Menu
 	; -----------------------------------		
-	Menu, MyAOTMenu, Add, ON, UpdateAOT
-	Menu, MyAOTMenu, Add, OFF, UpdateAOT
+	Menu, MyAlwaysOnTopMenu, Add, ON, UpdateAlwaysOnTop
+	Menu, MyAlwaysOnTopMenu, Add, OFF, UpdateAlwaysOnTop
 	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
 	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
 	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
@@ -101,7 +89,7 @@
 	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
 	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
 	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Always On Top, :MyAOTMenu
+	Menu, MyContextMenu, Add, Always On Top, :MyAlwaysOnTopMenu
 	Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
 	Menu, MyContextMenu, Add
 	Menu, MyContextMenu, Add, Close, EventExit
@@ -186,25 +174,14 @@ ShowGui:
 		Gui, 1: Font, cFFFFFF s8,
 	}
 
-	; Gui, 1: Add, 		Text,	xm y+3  w%guiControlWidth% h1 0x7
 	Gui, 1: Show, 		% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
 	OnMessage(0x219, "WM_DEVICECHANGE")
-
-	
-	/*
-	; add to Themes??
-	; overlay rounded corner region based on current gui width/height
-	WinGetPos,,,guiWidth,guiHeight,%scriptName%
-	regionWidth 			:= 			(guiWidth - 10)
-	regionHeight 			:= 			(guiHeight - 10)
-	WinSet, Region, 0-0 W%regionWidth% H%regionHeight% R30-30, %scriptName%	
-	*/
 	
 	SetTimer, UpdateRegion, -250
 	SetTimer, UpdateDrive, -250
-	SetTimer, UpdateAOT, -250
+	SetTimer, UpdateAlwaysOnTop, -250
 	SetTimer, UpdateTrans, -250
 
 
@@ -230,7 +207,7 @@ Return
 ; -----------------------------------
 ;	UpdateAOT
 ; -----------------------------------
-UpdateAOT:
+UpdateAlwaysOnTop:
 	; if label called from a menu
 	If (A_ThisMenuItem)
 	{
