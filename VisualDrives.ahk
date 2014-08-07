@@ -106,12 +106,7 @@ ShowGui:
 	Gui, 1: Font, 	c800080,	Consolas
 	Gui, 1: Add,	Text,	xm ym w80, %scriptName%
 	Gui, 1: Font,	c800080, 
-	Gui, 1: Add, 	Text,	xm+80  yp w40 0x202, Used
-	Gui, 1: Font, 	c800080,
-	Gui, 1: Add, 	Text,	xm+160 yp   w60 0x202, Total
-	Gui, 1: Font, 	c800080,
 	Gui, 1: Add,	Text,	xm+250 yp w100 h10, Version %scriptVersion%
-	Gui, 1: Font, 	c800080,
 	Gui, 1: Add, 	Text,	xm y+3 w%guiControlWidth% h1 0x7
 	Gui, 1: Add, 	Text,	xm y+3 w30 0x200, Fixed:
 	
@@ -120,36 +115,33 @@ ShowGui:
 	DriveGet, DrvLstFxd, List, FIXED
 	Loop, Parse, DrvLstFxd
 	{
-		Gui, 1: Font,	c800080,
-		Gui, 1: Add,	Text,    	xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
-		Gui, 1: Font,	cFF00FF,
-		Gui, 1: Add,	Text,    	xm+40  yp w80 0x202 vD%A_Loopfield%1,
-		Gui, 1: Font,	c800080,
-		Gui, 1: Add,	Text,     	xm+140 yp w80 0x202 vD%A_Loopfield%2,
-		Gui, 1: Add,	Progress, 	xm+250 yp+1 w100 h10 vD%A_Loopfield%3,
+		; Gui, 1: Font,	c800080,
+		Gui, 1: Add,	Progress, 	xm yp+20 w350 h10 vD%A_Loopfield%3,
 		Gui, 1: Font,	c000000 s7,
-		Gui, 1: Add,	Text,     	xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font,	c800080 s8,
+		Gui, 1: Add,	Text,     	xm yp w350 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
+		Gui, 1: Font,	cFF00FF s8,
+		Gui, 1: Add,	Text,    	xm y+1 w30 0x200 gDriveClick, %A_Loopfield%:
+		Gui, 1: Add,	Text,    	xm+40 yp w60 0x202 vD%A_Loopfield%1 Left,
+		Gui, 1: Add,	Text,    	xm+110 yp w50 Left, used of
+		Gui, 1: Add,	Text,     	xm+170 yp w80 0x202 vD%A_Loopfield%2 Left,
 	}
 
 	Gui, 1: Add, 		Text,     	xm     y+3  w%guiControlWidth% h1 0x7
-	Gui, 1: Font, 		c800080,
+	Gui, 1: Font, 		c800080 s8,
 	Gui, 1: Add, 		Text,     	xm     y+3 w30 0x200, Removable:
 	; Removable drives
 	DriveGet, DrvLstRmvbl, List, REMOVABLE
-	loop, Parse, DrvLstRmvbl
+	Loop, Parse, DrvLstRmvbl
 	{
-		Gui, 1: Font, c800080,
-		Gui, 1: Add, Text,     xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
-		Gui, 1: Font, cFF00FF,
-		Gui, 1: Add, Text,     xm+40  yp w80 0x202 vD%A_Loopfield%1,
-		Gui, 1: Font, c800080,
-		Gui, 1: Add, Text,     xm+140 yp w80 0x202 vD%A_Loopfield%2,
-		Gui, 1: Add, Progress, xm+250 yp+1 w70 h10 vD%A_Loopfield%3,
-		Gui, 1: Font, c000000 s7,
-		Gui, 1: Add, Text,     xm+250 yp w70 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font, c800080 s7,
-		Gui, 1: Add, Text,     xm+320 yp w30 0x202 v%A_Loopfield% gDriveEject, Eject
+		Gui, 1: Add,	Progress, 	xm yp+20 w350 h10 vD%A_Loopfield%3,
+		Gui, 1: Font,	c000000 s7,
+		Gui, 1: Add,	Text,   xm yp w350 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
+		Gui, 1: Font,	cFF00FF s8,
+		Gui, 1: Add,	Text,   xm y+1 w30 0x200 gDriveClick, %A_Loopfield%:
+		Gui, 1: Add,	Text,   xm+40 yp w60 0x202 vD%A_Loopfield%1 Left,
+		Gui, 1: Add,	Text,   xm+110 yp w50 Left, used of
+		Gui, 1: Add,	Text,   xm+170 yp w80 0x202 vD%A_Loopfield%2 Left,
+		Gui, 1: Add,	Text,	xm+260 yp w30 0x202 v%A_Loopfield% gDriveEject, Eject
 		Gui, 1: Font, c800080 s8,
 	}
 
@@ -160,16 +152,14 @@ ShowGui:
 	DriveGet, DrvLstNtwrk, List, NETWORK
 	loop, Parse, DrvLstNtwrk
 	{
-		Gui, 1: Font, c800080,
-		Gui, 1: Add, Text,     xm     y+1 w30 0x200 gDriveClick, %A_Loopfield%:\
-		Gui, 1: Font, cFF00FF,
-		Gui, 1: Add, Text,     xm+40  yp w80 0x202 vD%A_Loopfield%1,
-		Gui, 1: Font, c800080,
-		Gui, 1: Add, Text,     xm+140 yp w80 0x202 vD%A_Loopfield%2,
-		Gui, 1: Add, Progress, xm+250 yp+1 w100 h10 vD%A_Loopfield%3,
-		Gui, 1: Font, c000000 s7,
-		Gui, 1: Add, Text,     xm+250 yp w100 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font, c800080 s8,
+		Gui, 1: Add,	Progress, 	xm yp+20 w350 h10 vD%A_Loopfield%3,
+		Gui, 1: Font,	c000000 s7,
+		Gui, 1: Add,	Text,     	xm yp w350 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
+		Gui, 1: Font,	cFF00FF s8,
+		Gui, 1: Add,	Text,    	xm y+1 w30 0x200 gDriveClick, %A_Loopfield%:
+		Gui, 1: Add,	Text,    	xm+40 yp w60 0x202 vD%A_Loopfield%1 Left,
+		Gui, 1: Add,	Text,    	xm+110 yp w50 Left, used of
+		Gui, 1: Add,	Text,     	xm+170 yp w80 0x202 vD%A_Loopfield%2 Left,
 	}
 
 	Gui, 1: Show, 		% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
@@ -305,7 +295,7 @@ Return
 ;	Desc: run each drive letter
 ; -----------------------------------
 DriveEject:
-	tmpVar := A_GuiControl . ":"
+	tmpVar := A_GuiControl
 	ejectSuccess := Function_Eject(tmpVar)
 	If !(ejectSuccess)
 	{
