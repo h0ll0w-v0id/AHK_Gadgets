@@ -97,7 +97,6 @@ ShowGui:
 	Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7	
 
 	Gui, 1: Add,	Text,	xm y+100 w20 h10 vCPU1, 0`%
-	Gui, 1: Add, 	Text, 	xm+20 ym+0 w1 h125 0x7
 	Gui, 1: Add,	Text,	xm+21 ym+20 w320 h111 hwndhGraph, pGraph 
 	pGraph := XGraph( hGraph, 0x000000, 1, "5,5,5,5", 0xFF00FF )
 	Gui, 1: Show,	% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
