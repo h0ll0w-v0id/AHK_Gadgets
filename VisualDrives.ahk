@@ -34,11 +34,11 @@
 	#include Class_Functions.ahk
 
 	; -----------------------------------
-	;	Script Globals
-	; -----------------------------------
+	;	Globals
+	; -----------------------------------	
 	global scriptName 	:= 	"VisualDrives" 
-	global scriptVersion :=	"1.0.0"
-	global scriptConfig	:=	"Visual_Config.ini"
+	global scriptVersion :=	"1.0.1"
+	global scriptConfig	:=	"VisualConfig.ini"
 	global guiX	:=	Center
 	global guiY	:=	Center
 	global guiWidth		:=	400
@@ -47,7 +47,31 @@
 	global guiControlWidth	:=	( guiWidth - ( guiRegion * 2) )
 	global guiTransparency	:=	204
 	global guiAlwaysOnTop	:=	ON
+	global guiColor1	:=	"0x000000"
+	global guiColor2	:=	"0xFF00FF"
+	; -----------------------------------
+	;	GUI Right Click Menu
+	; -----------------------------------		
+	Menu, MyAlwaysOnTopMenu, Add, ON, UpdateAlwaysOnTop
+	Menu, MyAlwaysOnTopMenu, Add, OFF, UpdateAlwaysOnTop
+	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 80`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
+	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
+	Menu, MyContextMenu, Add
+	Menu, MyContextMenu, Add, Always On Top, :MyAlwaysOnTopMenu
+	Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
+	Menu, MyContextMenu, Add
+	Menu, MyContextMenu, Add, Settings, UpdateConfig
+	Menu, MyContextMenu, Add
+	Menu, MyContextMenu, Add, Close, EventExit
 	
+; -----------------------------------
+;	GlobalConfig
+; -----------------------------------	
+GlobalConfig:	
 	; -----------------------------------
 	;	Read in Config values (if available)
 	; -----------------------------------
@@ -73,27 +97,20 @@
 		{
 			guiTransparency := tempTransparency	
 		}
-
-		tempX = tempY = tempTransparency = tempAlwaysOnTop = 
+		IniRead tempColor1, %scriptConfig%, %scriptName%, guiColor1
+		If (tempColor1 <> "ERROR")
+		{
+			guiColor1 := tempColor1
+		}
+		IniRead tempColor2, %scriptConfig%, %scriptName%, guiColor2
+		If (tempColor2 <> "ERROR")
+		{
+			guiColor2 := tempColor2
+		}
+		tempX = tempY = tempAlwaysOnTop = tempTransparency = tempColor1 = tempColor2 =
 	}
-
-	; -----------------------------------
-	;	GUI Right Click Menu
-	; -----------------------------------		
-	Menu, MyAlwaysOnTopMenu, Add, ON, UpdateAlwaysOnTop
-	Menu, MyAlwaysOnTopMenu, Add, OFF, UpdateAlwaysOnTop
-	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 80`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
-	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
-	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Always On Top, :MyAlwaysOnTopMenu
-	Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
-	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Close, EventExit
-	
+	GoSub, ShowGui
+Return	
 ; -----------------------------------
 ;	GUI Display
 ; -----------------------------------	
@@ -102,10 +119,9 @@ ShowGui:
 	Gui, 1:	Destroy
 	Gui, 1: +LastFound -Caption +ToolWindow +hwndhMain
 	Gui, 1: Margin,	10, 10
-	Gui, 1: Color, 	c000000
-	Gui, 1: Font, 	c800080,	Consolas
+	Gui, 1: Color, 	%guiColor1%
+	Gui, 1: Font,	c%guiColor2%,	Consolas
 	Gui, 1: Add,	Text,	xm ym w80, %scriptName%
-	Gui, 1: Font,	c800080, 
 	Gui, 1: Add,	Text,	xm+250 yp w100 h10, Version %scriptVersion%
 	Gui, 1: Add, 	Text,	xm y+3 w%guiControlWidth% h1 0x7
 	Gui, 1: Add, 	Text,	xm y+3 w30 0x200, Fixed:
@@ -117,9 +133,9 @@ ShowGui:
 	{
 		; Gui, 1: Font,	c800080,
 		Gui, 1: Add,	Progress, 	xm yp+20 w350 h10 vD%A_Loopfield%3,
-		Gui, 1: Font,	c000000 s7,
+		Gui, 1: Font,	s7,
 		Gui, 1: Add,	Text,     	xm yp w350 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font,	cFF00FF s8,
+		Gui, 1: Font,	s8,
 		Gui, 1: Add,	Text,    	xm y+1 w30 0x200 gDriveClick, %A_Loopfield%:
 		Gui, 1: Add,	Text,    	xm+40 yp w60 0x202 vD%A_Loopfield%1 Left,
 		Gui, 1: Add,	Text,    	xm+110 yp w50 Left, used of
@@ -127,35 +143,35 @@ ShowGui:
 	}
 
 	Gui, 1: Add, 		Text,     	xm     y+3  w%guiControlWidth% h1 0x7
-	Gui, 1: Font, 		c800080 s8,
+	; Gui, 1: Font, 		s8,
 	Gui, 1: Add, 		Text,     	xm     y+3 w30 0x200, Removable:
 	; Removable drives
 	DriveGet, DrvLstRmvbl, List, REMOVABLE
 	Loop, Parse, DrvLstRmvbl
 	{
 		Gui, 1: Add,	Progress, 	xm yp+20 w350 h10 vD%A_Loopfield%3,
-		Gui, 1: Font,	c000000 s7,
+		Gui, 1: Font,	s7,
 		Gui, 1: Add,	Text,   xm yp w350 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font,	cFF00FF s8,
+		Gui, 1: Font,	s8,
 		Gui, 1: Add,	Text,   xm y+1 w30 0x200 gDriveClick, %A_Loopfield%:
 		Gui, 1: Add,	Text,   xm+40 yp w60 0x202 vD%A_Loopfield%1 Left,
 		Gui, 1: Add,	Text,   xm+110 yp w50 Left, used of
 		Gui, 1: Add,	Text,   xm+170 yp w80 0x202 vD%A_Loopfield%2 Left,
 		Gui, 1: Add,	Text,	xm+260 yp w30 0x202 v%A_Loopfield% gDriveEject, Eject
-		Gui, 1: Font, c800080 s8,
+		; Gui, 1: Font,  s8,
 	}
 
 	Gui, 1: Add, Text,     xm     y+3  w%guiControlWidth% h1 0x7
-	Gui, 1: Font, c800080,
+	; Gui, 1: Font, ,
 	Gui, 1: Add, Text,     xm     y+3 w30 0x200, Network:
 	; Network drives
 	DriveGet, DrvLstNtwrk, List, NETWORK
 	loop, Parse, DrvLstNtwrk
 	{
 		Gui, 1: Add,	Progress, 	xm yp+20 w350 h10 vD%A_Loopfield%3,
-		Gui, 1: Font,	c000000 s7,
+		Gui, 1: Font,	s7,
 		Gui, 1: Add,	Text,     	xm yp w350 h11 0x202 +BackgroundTrans vD%A_Loopfield%4,
-		Gui, 1: Font,	cFF00FF s8,
+		Gui, 1: Font,	s8,
 		Gui, 1: Add,	Text,    	xm y+1 w30 0x200 gDriveClick, %A_Loopfield%:
 		Gui, 1: Add,	Text,    	xm+40 yp w60 0x202 vD%A_Loopfield%1 Left,
 		Gui, 1: Add,	Text,    	xm+110 yp w50 Left, used of
@@ -168,10 +184,9 @@ ShowGui:
 	OnMessage(0x219, "WM_DEVICECHANGE")
 	
 	SetTimer, UpdateRegion, -250
-	SetTimer, UpdateDrive, -250
 	SetTimer, UpdateAlwaysOnTop, -250
 	SetTimer, UpdateTrans, -250
-
+	SetTimer, UpdateDrive, -250
 
 Return
 ; -----------------------------------
@@ -193,6 +208,15 @@ UpdateRegion:
 	updateSuccess := Function_UpdateRegion(30, 30, scriptName)
 Return
 ; -----------------------------------
+;	UpdateConfig
+; -----------------------------------
+UpdateConfig:
+	Run, Notepad.exe %scriptConfig%, , , notePadPID
+	WinWait, ahk_pid %notepadPID% WinActivate 
+	WinWaitClose
+	GoSub GlobalConfig
+Return
+; -----------------------------------
 ;	UpdateAOT
 ; -----------------------------------
 UpdateAlwaysOnTop:
@@ -206,7 +230,7 @@ UpdateAlwaysOnTop:
 	Else
 	{
 		newValue := guiAlwaysOnTop
-		menuName := "MyAOTMenu"
+		menuName := "MyAlwaysOnTopMenu"
 	}
 	updateSuccess := Function_AlwaysOnTop(newValue, menuName, scriptName)
 	; if not error, save return variables
@@ -256,7 +280,7 @@ UpdateDrive:
         GuiControl,, D%i%1, % Round(used%i% / 1024, 2) " GB"
         GuiControl,, D%i%2, % Round(cap%i% / 1024, 2) " GB"
         GuiControl, % "+Range0-" cap%i%, D%i%3
-        GuiControl, % (perc%i% <= "80") ? "+cFF00FF" : (perc%i% <= "90") ? "+cFFA500" : "+cFF0000", D%i%3
+        GuiControl, % (perc%i% <= "80") ? "+c"guiColor2 : (perc%i% <= "90") ? "+cFFA500" : "+cFF0000", D%i%3
         GuiControl,, D%i%3, % used%i%
         GuiControl,, D%i%4, % (varPerc = "1") ? Round(perc%i%, 2) " % " : ""
     }
@@ -270,7 +294,7 @@ UpdateDrive:
         GuiControl,, D%j%1, % Round(used%j% / 1024, 2) " GB"
         GuiControl,, D%j%2, % Round(cap%j% / 1024, 2) " GB"
         GuiControl, % "+Range0-" cap%j%, D%j%3
-        GuiControl, % (perc%j% <= "80") ? "+cFF00FF" : (perc%j% <= "90") ? "+cFFA500" : "+cFF0000", D%j%3
+        GuiControl, % (perc%j% <= "80") ? "+c"guiColor2 : (perc%j% <= "90") ? "+cFFA500" : "+cFF0000", D%j%3
         GuiControl,, D%j%3, % used%j%
         GuiControl,, D%j%4, % (varPerc = "1") ? Round(perc%j%, 2) " % " : ""
     }
@@ -284,7 +308,7 @@ UpdateDrive:
         GuiControl,, D%k%1, % Round(used%k% / 1024, 2) " GB"
         GuiControl,, D%k%2, % Round(cap%k% / 1024, 2) " GB"
         GuiControl, % "+Range0-" cap%k%, D%k%3
-        GuiControl, % (perc%k% <= "80") ? "+cFF00FF" : (perc%k% <= "90") ? "+cFFA500" : "+cFF0000", D%k%3
+        GuiControl, % (perc%k% <= "80") ? "+c"guiColor2 : (perc%k% <= "90") ? "+cFFA500" : "+cFF0000", D%k%3
         GuiControl,, D%k%3, % used%k%
         GuiControl,, D%k%4, % (varPerc = "1") ? Round(perc%k%, 2) " % " : ""
     }
