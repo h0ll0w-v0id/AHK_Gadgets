@@ -5,7 +5,7 @@
 	Project Name: MyDrives
 	
 	Revision History:
-	
+	1.0.1 Updated to include config file editing
 	--------------------------------------------------------
 
 */
@@ -22,11 +22,11 @@
 	#Include Class_xGraph.ahk
 	
 	; -----------------------------------
-	;	Script Globals
-	; -----------------------------------
+	;	Globals
+	; -----------------------------------	
 	global scriptName 	:= 	"VisualCPU" 
-	global scriptVersion :=	"1.0.0"
-	global scriptConfig	:=	"Visual_Config.ini"
+	global scriptVersion :=	"1.0.1"
+	global scriptConfig	:=	"VisualConfig.ini"
 	global guiX	:=	Center
 	global guiY	:=	Center
 	global guiWidth		:=	400
@@ -35,7 +35,31 @@
 	global guiControlWidth	:=	( guiWidth - ( guiRegion * 2) )
 	global guiAlwaysOnTop	:=	ON
 	global guiTransparency	:=	204
-
+	global guiColor1	:=	"0x000000"
+	global guiColor2	:=	"0xFF00FF"
+	; -----------------------------------
+	;	GUI Right Click Menu
+	; -----------------------------------		
+	Menu, MyAlwaysOnTopMenu, Add, ON, UpdateAlwaysOnTop
+	Menu, MyAlwaysOnTopMenu, Add, OFF, UpdateAlwaysOnTop
+	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 80`%, UpdateTrans
+	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
+	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
+	Menu, MyContextMenu, Add
+	Menu, MyContextMenu, Add, Always On Top, :MyAlwaysOnTopMenu
+	Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
+	Menu, MyContextMenu, Add
+	Menu, MyContextMenu, Add, Settings, UpdateConfig
+	Menu, MyContextMenu, Add
+	Menu, MyContextMenu, Add, Close, EventExit
+	
+; -----------------------------------
+;	GlobalConfig
+; -----------------------------------	
+GlobalConfig:	
 	; -----------------------------------
 	;	Read in Config values (if available)
 	; -----------------------------------
@@ -61,27 +85,20 @@
 		{
 			guiTransparency := tempTransparency	
 		}
-
-		tempX = tempY = tempAlwaysOnTop = tempTheme = tempTransparency =
+		IniRead tempColor1, %scriptConfig%, %scriptName%, guiColor1
+		If (tempColor1 <> "ERROR")
+		{
+			guiColor1 := tempColor1
+		}
+		IniRead tempColor2, %scriptConfig%, %scriptName%, guiColor2
+		If (tempColor2 <> "ERROR")
+		{
+			guiColor2 := tempColor2
+		}
+		tempX = tempY = tempAlwaysOnTop = tempTransparency = tempColor1 = tempColor2 = 
 	}
-
-	; -----------------------------------
-	;	GUI Right Click Menu
-	; -----------------------------------		
-	Menu, MyAlwaysOnTopMenu, Add, ON, UpdateAlwaysOnTop
-	Menu, MyAlwaysOnTopMenu, Add, OFF, UpdateAlwaysOnTop
-	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 80`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
-	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
-	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Always On Top, :MyAlwaysOnTopMenu
-	Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
-	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Close, EventExit
-	
+	GoSub, ShowGui
+Return	
 ; -----------------------------------
 ;	GUI Display
 ; -----------------------------------	
@@ -90,15 +107,14 @@ ShowGui:
 	Gui, 1:	Destroy
 	Gui, 1: +LastFound -Caption +ToolWindow +hwndhMain
 	Gui, 1: Margin,	10, 10
-	Gui, 1: Color, 	c000000
-	Gui, 1: Font, 	c800080,	Consolas
+	Gui, 1: Color, 	%guiColor1%
+	Gui, 1: Font,	c%guiColor2%,	Consolas
 	Gui, 1: Add,	Text,	xm+30 ym w80, %scriptName%
 	Gui, 1: Add,	Text,	xm+250 yp w100 h10, Version %scriptVersion%
 	Gui, 1: Add,	Text,	xm y+3  w%guiControlWidth% h1 0x7	
-
 	Gui, 1: Add,	Text,	xm y+100 w20 h10 vCPU1, 0`%
 	Gui, 1: Add,	Text,	xm+21 ym+20 w320 h111 hwndhGraph, pGraph 
-	pGraph := XGraph( hGraph, 0x000000, 1, "5,5,5,5", 0xFF00FF )
+	pGraph := XGraph( hGraph, guiColor1, 1, "5,5,5,5", guiColor2 )
 	Gui, 1: Show,	% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
 
 	OnMessage(0x201, "WM_LBUTTONDOWN")
@@ -128,6 +144,15 @@ Return
 ; -----------------------------------
 UpdateRegion:
 	updateSuccess := Function_UpdateRegion(guiRegion, guiRegion, scriptName)
+Return
+; -----------------------------------
+;	UpdateConfig
+; -----------------------------------
+UpdateConfig:
+	Run, Notepad.exe %scriptConfig%, , , notePadPID
+	WinWait, ahk_pid %notepadPID% WinActivate 
+	WinWaitClose
+	GoSub GlobalConfig
 Return
 ; -----------------------------------
 ;	UpdateAlwaysOnTop
@@ -179,7 +204,6 @@ UpdateTrans:
 Return
 
 
-
 ; thanks to jNizM
 ; http://ahkscript.org/boards/viewtopic.php?f=6&t=254
 UpdateCPULoad:
@@ -202,7 +226,7 @@ CPULoad()
 } 
 
 XGraph_Paint:
-	Sleep -1
+	; Sleep -1
 	XGraph_Plot( pGraph )
 Return
 
