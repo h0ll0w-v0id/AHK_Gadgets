@@ -1,7 +1,7 @@
 Gadgets
 =======
 
-<h3>AHK scripts that mimic Windows 7 Gadgets</h3>
+<h3>AutoHotkey scripts that mimic Windows 7 Gadgets</h3>
 <br>
 These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
@@ -10,7 +10,7 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 => Based on code by jNizM
 <br>
-=> Built with AHK 1.1.15.04 running on Windows 7 64bit
+=> Built with AutoHotkey 1.1.15.04 running on Windows 7 64bit
 <br>
 => Requires Functions.ahk to be in the same directory to compile
 <br>
@@ -19,6 +19,6 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 => Based on code by jNizM
 <br>
-=> Built with AHK 1.1.15.04 running on Windows 7 64bit
+=> Built with AutoHotkey 1.1.15.04 running on Windows 7 64bit
 <br>
 => Requires Functions.ahk and XGraph.ahk to be in the same directory to compile
