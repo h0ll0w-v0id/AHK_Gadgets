@@ -10,15 +10,13 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 => Based on code by jNizM
 <br>
-=> Built with AutoHotkey 1.1.15.04 running on Windows 7 64bit
+=> Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit
 <br>
 => Requires Functions.ahk to be in the same directory to compile
 <br>
 <br>
 <h3>VisualCPU</h3> https://github.com/h0ll0w-v0id/Gadgets/blob/master/VisualCPU.ahk
 <br>
-=> Based on code by jNizM
-<br>
-=> Built with AutoHotkey 1.1.15.04 running on Windows 7 64bit
+=> Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit
 <br>
 => Requires Functions.ahk and XGraph.ahk to be in the same directory to compile
