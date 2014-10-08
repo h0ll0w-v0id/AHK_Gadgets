@@ -6,6 +6,9 @@
 	
 	Revision History:
 	1.0.1 Updated to include config file editing
+	
+	based off of htopmini by jNizM
+	https://github.com/jNizM/htopmini
 	--------------------------------------------------------
 
 */
