@@ -9,6 +9,26 @@
 	
 	based off of htopmini by jNizM
 	https://github.com/jNizM/htopmini
+	
+	--------------------------------------------------------
+	; from:
+	; AHK Version ...: AHK_L 1.1.15.00 x64 Unicode
+	; Win Version ...: Windows 7 Professional x64 SP1
+	; Description ...: htopmini
+	; Version .......: v0.8.3
+	; Modified ......: 2014.04.11-2027
+	; Author ........: jNizM
+	; Licence .......: WTFPL (http://www.wtfpl.net/txt/copying/)
+	; ======================================================
+	;@Ahk2Exe-SetName htopmini
+	;@Ahk2Exe-SetDescription htopmini
+	;@Ahk2Exe-SetVersion v0.8.3
+	;@Ahk2Exe-SetCopyright Copyright (c) 2013-2014`, jNizM
+	;@Ahk2Exe-SetOrigFilename htopmini.ahk
+	--------------------------------------------------------
+	
+	
+	
 	--------------------------------------------------------
 
 */
