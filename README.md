@@ -17,4 +17,4 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 => Built with AHK 1.1.15.04 running on Windows 7 64bit
 <br>
-=> Requires Functions.ahk and Class_XGraph.ahk to be in the same directory to compile
+=> Requires Functions.ahk and XGraph.ahk to be in the same directory to compile
