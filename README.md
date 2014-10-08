@@ -15,6 +15,8 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 <h3>VisualCPU</h3> https://github.com/h0ll0w-v0id/Gadgets/blob/master/VisualCPU.ahk
 <br>
+=> Based on code by jNizM
+<br>
 => Built with AHK 1.1.15.04 running on Windows 7 64bit
 <br>
 => Requires Functions.ahk and XGraph.ahk to be in the same directory to compile
