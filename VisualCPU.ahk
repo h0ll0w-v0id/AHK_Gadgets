@@ -18,8 +18,8 @@
 	ListLines, Off
 		
 	; found here https://github.com/h0ll0w-v0id/Gadgets
-	#include Class_Functions.ahk
-	#Include Class_xGraph.ahk
+	#include Functions.ahk
+	#Include xGraph.ahk
 	
 	; -----------------------------------
 	;	Globals
