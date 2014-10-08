@@ -6,6 +6,10 @@
 	
 	Revision History:
 	
+	based off of htopmini by jNizM
+	https://github.com/jNizM/htopmini
+	
+	
 	--------------------------------------------------------
 	; from:
 	; AHK Version ...: AHK_L 1.1.15.00 x64 Unicode
