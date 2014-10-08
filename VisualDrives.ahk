@@ -2,7 +2,7 @@
 	--------------------------------------------------------
 	REVISION BLOCK
 		
-	Project Name: MyDrives
+	Project Name: VisualDrives
 	
 	Revision History:
 	
