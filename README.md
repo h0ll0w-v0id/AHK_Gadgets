@@ -8,6 +8,8 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 <h3>VisualDrives</h3> https://github.com/h0ll0w-v0id/Gadgets/blob/master/VisualDrives.ahk
 <br>
+=> Based on code by jNizM
+<br>
 => Built with AHK 1.1.15.04 running on Windows 7 64bit
 <br>
 => Requires Functions.ahk to be in the same directory to compile
