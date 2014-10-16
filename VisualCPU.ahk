@@ -5,11 +5,30 @@
 	Project Name: VisualCPU
 	
 	Revision History:
-	1.0.1 Updated to include config file editing
 	
+	Date		Rev		Change Description
+	--------------------------------------------------------
+	10/16/14	1.0.1		Updated to include config file editing
 	--------------------------------------------------------
 
-*/
+	Project Overview:
+	
+		A AutoHotkey script that displays CPU graph using XGraph.ahk
+	
+	Project Features:
+	
+		NA
+			
+	Project Notes:
+
+		Requires PC Running Windows 7
+		
+		Requires Functions.ahk + XGraph.ahk
+			
+	--------------------------------------------------------
+	*/
+
+
 
 	#NoEnv
 	#SingleInstance Force
