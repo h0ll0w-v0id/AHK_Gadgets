@@ -1,4 +1,4 @@
-/*
+	/*
 	--------------------------------------------------------
 	REVISION BLOCK
 		
@@ -6,27 +6,48 @@
 	
 	Revision History:
 	
-	based off of htopmini by jNizM
-	https://github.com/jNizM/htopmini
-	
-	
+	Date		Rev		Change Description
 	--------------------------------------------------------
-	; from:
-	; AHK Version ...: AHK_L 1.1.15.00 x64 Unicode
-	; Win Version ...: Windows 7 Professional x64 SP1
-	; Description ...: htopmini
-	; Version .......: v0.8.3
-	; Modified ......: 2014.04.11-2027
-	; Author ........: jNizM
-	; Licence .......: WTFPL (http://www.wtfpl.net/txt/copying/)
-	; ======================================================
-	;@Ahk2Exe-SetName htopmini
-	;@Ahk2Exe-SetDescription htopmini
-	;@Ahk2Exe-SetVersion v0.8.3
-	;@Ahk2Exe-SetCopyright Copyright (c) 2013-2014`, jNizM
-	;@Ahk2Exe-SetOrigFilename htopmini.ahk
+	10/16/14	1.0.0		Updated to include config file editing
 	--------------------------------------------------------
-*/
+
+	Project Overview:
+	
+		A AutoHotkey script that displays drive information
+		
+		based off of htopmini by jNizM
+		https://github.com/jNizM/htopmini
+	
+		--------------------------------------------------------
+		; from:
+		; AHK Version ...: AHK_L 1.1.15.00 x64 Unicode
+		; Win Version ...: Windows 7 Professional x64 SP1
+		; Description ...: htopmini
+		; Version .......: v0.8.3
+		; Modified ......: 2014.04.11-2027
+		; Author ........: jNizM
+		; Licence .......: WTFPL (http://www.wtfpl.net/txt/copying/)
+		; ======================================================
+		;@Ahk2Exe-SetName htopmini
+		;@Ahk2Exe-SetDescription htopmini
+		;@Ahk2Exe-SetVersion v0.8.3
+		;@Ahk2Exe-SetCopyright Copyright (c) 2013-2014`, jNizM
+		;@Ahk2Exe-SetOrigFilename htopmini.ahk
+		--------------------------------------------------------	
+
+	Project Features:
+	
+		NA
+			
+	Project Notes:
+
+		Requires PC Running Windows 7
+		
+		Requires Functions.ahk
+			
+	--------------------------------------------------------
+	*/
+
 
 	#NoEnv
 	#SingleInstance Force
@@ -34,7 +55,7 @@
 	SetTitleMatchMode 2	
 	SetBatchLines -1
 
-	; found here https://github.com/h0ll0w-v0id/Gadgets
+	; found here https://github.com/h0ll0w-v0id/Windows_Gadgets
 	#include Functions.ahk
 
 	; -----------------------------------
