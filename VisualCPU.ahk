@@ -36,8 +36,8 @@
 	SetTitleMatchMode 2	
 	SetBatchLines -1
 	ListLines, Off
-		
-	; found here https://github.com/h0ll0w-v0id/Gadgets
+	
+	; found here https://github.com/h0ll0w-v0id/Windows_Gadgets
 	#include Functions.ahk
 	; found here http://ahkscript.org/boards/viewtopic.php?t=3492
 	#Include xGraph.ahk
