@@ -20,7 +20,7 @@
 		
 	; found here https://github.com/h0ll0w-v0id/Gadgets
 	#include Functions.ahk
-	; foudn here ...
+	; found here http://ahkscript.org/boards/viewtopic.php?t=3492
 	#Include xGraph.ahk
 	
 	; -----------------------------------
