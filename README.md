@@ -1,7 +1,7 @@
 Windows_Gadgets
 =======
 <br>AutoHotkey scripts that mimic Windows 7 Gadgets<br>
-These scripts are built using AutoHotkey: http://ahkscript.org/
+These scripts are built using [AutoHotkey](http://ahkscript.org/)
 
 <hr width=50%>
 -[VisualCPU](VisualCPU.ahk)<br>
