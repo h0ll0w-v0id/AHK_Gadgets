@@ -3,7 +3,7 @@ Windows_Gadgets
 <br>AutoHotkey scripts that mimic Windows 7 Gadgets<br>
 These scripts are built using AutoHotkey: http://ahkscript.org/
 
-<br><hr width=50%>
+<hr width=50%>
 -[VisualCPU](VisualCPU.ahk)<br>
 ![Preview](CPUpreview.png "Preview")![Preview](CPUpreview2.png "Preview")<br>
 => Has some limitations - sometimes graph times out or hangs to flatline<br>
@@ -11,9 +11,9 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit<br>
 => Requires [Functions](Functions.ahk) and [XGraph](XGraph.ahk) to be in the same directory to compile<br>
 
-<br><hr width=50%>
+<hr width=50%>
 -[VisualDrives](VisualDrives.ahk)<br>
 Currently down...var bug<br>
 => Based on code by jNizM<br>
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit<br>
-=> Requires Functions.ahk to be in the same directory to compile
+=> Requires [Functions](Functions.ahk) to be in the same directory to compile
