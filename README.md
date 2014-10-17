@@ -13,7 +13,9 @@ These scripts are built using [AutoHotkey](http://ahkscript.org/)
 
 <hr width=50%>
 [VisualDrives](VisualDrives.ahk)<br>
-Currently down...var bug<br>
+![Preview3](DRIVESpreview.PNG "Preview3")<br>![Preview3](DRIVESpreview2.png "Preview3")<br>
+=> Has some limitations - Eject doesnt work for removable devices<br>
+=> Has menu that allows user to select "gagdet" like settings<br>
 => Based on code by jNizM<br>
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit<br>
 => Requires [Functions](Functions.ahk) to be in the same directory to compile
