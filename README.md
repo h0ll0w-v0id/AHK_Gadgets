@@ -1,6 +1,7 @@
 Windows_Gadgets
 =======
 ![Preview](preview.png "Preview")
+<br>
 AutoHotkey scripts that mimic Windows 7 Gadgets
 <br>
 These scripts are built using AutoHotkey: http://ahkscript.org/
@@ -10,7 +11,7 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit
 <br>
-=> Requires Functions.ahk and XGraph.ahk to be in the same directory to compile
+=> Requires [Functions.ahk] and XGraph.ahk to be in the same directory to compile
 <br>
 https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/XGraph.ahk
 <br>
