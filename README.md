@@ -5,7 +5,7 @@ Windows_Gadgets
 
 <h3>AutoHotkey scripts that mimic Windows 7 Gadgets</h3>
 <br>
-These scripts are built using AutoHotkey: http://ahkscript.org/
+<h2>These scripts are built using AutoHotkey: http://ahkscript.org/</h2>
 <br>
 <br>
 <hr width=50%>
