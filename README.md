@@ -5,7 +5,7 @@ These scripts are built using [AutoHotkey](http://ahkscript.org/)
 
 <hr width=50%>
 -[VisualCPU](VisualCPU.ahk)<br>
-![Preview](CPUpreview.png "Preview")![Preview](CPUpreview2.png "Preview")<br>
+![Preview1](CPUpreview.png "Preview1")![Preview2](CPUpreview2.png "Preview2")<br>
 => Has some limitations - sometimes graph times out or hangs to flatline<br>
 => Has menu that allows user to select "gagdet" like settings<br>
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit<br>
