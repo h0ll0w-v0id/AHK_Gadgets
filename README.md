@@ -4,7 +4,6 @@ Windows_Gadgets
 <br>
 These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
-<br>
 <hr width=50%>
 <h3>VisualCPU</h3> https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/VisualCPU.ahk
 <br>
@@ -15,7 +14,6 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/XGraph.ahk
 <br>
 https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/Functions.ahk
-<br>
 <br>
 <hr width=50%>
 <h3>VisualDrives</h3>
