@@ -10,13 +10,12 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 ![Preview](preview.png "Preview")![Preview](preview2.png "Preview")
 <br>
+=> Has some limitations - sometimes graph times out or hangs to flatline
+=> Has menu that allows user to select "gagdet" like settings 
+<br>
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit
 <br>
-=> Requires [Functions.ahk] and XGraph.ahk to be in the same directory to compile
-<br>
-https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/XGraph.ahk
-<br>
-https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/Functions.ahk
+=> Requires [Functions](Functions.ahk) and [XGraph](XGraph.ahk) to be in the same directory to compile
 <br>
 <hr width=50%>
 <h3>VisualDrives</h3>
