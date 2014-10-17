@@ -6,7 +6,7 @@ AutoHotkey scripts that mimic Windows 7 Gadgets
 These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 <hr width=50%>
-<h3>[VisualCPU](VisualCPU)</h3>
+<h3>[VisualCPU](VisualCPU.ahk)</h3>
 <br>
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit
 <br>
