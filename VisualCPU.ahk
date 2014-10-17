@@ -158,7 +158,7 @@ Return
 ;	AddGadgets
 ; -----------------------------------	
 AddGadgets:
-	Run https://github.com/h0ll0w-v0id/Gadgets
+	Run https://github.com/h0ll0w-v0id/Windows_Gadgets
 Return
 ; -----------------------------------
 ;	UpdateRegion
