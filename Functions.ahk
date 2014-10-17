@@ -3,13 +3,13 @@
 	REVISION BLOCK
 		
 	Project Name: Class_Functions
-	Project Author: h0ll0w
 	
 	Revision History:
 	
 	Date		  Rev			Change Description
 	--------------------------------------------------------
 	07/28/14	1.0.0		Beta release
+	10/17/14	1.0.1		Updated Function_UpdateTransparency
 		
 */	
 ; -----------------------------------
@@ -176,6 +176,10 @@ Function_UpdateTransparency(newValue, menuName, winTitle)
 			Menu, %menuName%, Uncheck, 80`%	
 			Menu, %menuName%, Check, 100`%
 			Return % const100
+		}
+		Else
+		{
+			Return 0
 		}
 	}
 	; on error, return 0
