@@ -16,6 +16,8 @@ These scripts are built using AutoHotkey: http://ahkscript.org/
 <br>
 => Requires Functions.ahk to be in the same directory to compile
 <br>
+https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/Functions.ahk
+<br>
 => Requires VisualConfig.ini to be in the same directory to compile (future improvment will remove this req)
 <br>
 https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/VisualConfig.ini
@@ -25,9 +27,11 @@ https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/VisualConfig.ini
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit
 <br>
 => Requires Functions.ahk and XGraph.ahk to be in the same directory to compile
-http://ahkscript.org/boards/viewtopic.php?t=3492
 <br>
 https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/XGraph.ahk
+<br>
+https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/Functions.ahk
+<br>
 => Requires VisualConfig.ini to be in the same directory to compile (future improvment will remove this req)
 <br>
 https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/VisualConfig.ini
