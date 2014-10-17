@@ -13,7 +13,7 @@ These scripts are built using [AutoHotkey](http://ahkscript.org/)
 
 <hr width=50%>
 [VisualDrives](VisualDrives.ahk)<br>
-![Preview3](DRIVESpreview.PNG "Preview3")<br>![Preview3](DRIVESpreview2.png "Preview3")<br>
+![Preview3](DRIVESpreview.PNG "Preview3")<br>![Preview3](DRIVESpreview2.PNG "Preview3")<br>
 => Has some limitations - Eject doesnt work for removable devices<br>
 => Based on code by jNizM<br>
 => Built with AutoHotkey 1.1.16.05 running on Windows 7 64bit<br>
