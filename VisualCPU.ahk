@@ -49,8 +49,8 @@
 	global scriptName 	:= 	"VisualCPU" 
 	global scriptVersion 	:=	"1.0.2"
 	global scriptConfig	:=	"VisualConfig.ini"
-	global guiX			:=	Center
-	global guiY			:=	Center
+	global guiX		:=	Center
+	global guiY		:=	Center
 	global guiWidth		:=	400
 	global guiHeight	:=	200
 	global guiRegion	:=	30
