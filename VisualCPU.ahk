@@ -9,7 +9,7 @@
 	Date		Rev		Change Description
 	--------------------------------------------------------
 	10/16/14	1.0.1		Updated to include config file editing
-	10/17/14	1.0.2		Updated run command
+	10/17/14	1.0.2		Updated run command, ini vars write upon close
 	--------------------------------------------------------
 
 	Project Overview:
@@ -49,8 +49,8 @@
 	global scriptName 	:= 	"VisualCPU" 
 	global scriptVersion 	:=	"1.0.2"
 	global scriptConfig	:=	"VisualConfig.ini"
-	global guiX		:=	Center
-	global guiY		:=	Center
+	global guiX			:=	Center
+	global guiY			:=	Center
 	global guiWidth		:=	400
 	global guiHeight	:=	200
 	global guiRegion	:=	30
@@ -138,7 +138,7 @@ ShowGui:
 	Gui, 1: Add,	Text,	xm+21 ym+20 w320 h111 hwndhGraph, pGraph 
 	pGraph := XGraph( hGraph, guiColor1, 1, "5,5,5,5", guiColor2 )
 	Gui, 1: Show,	% "AutoSize x" guiX " y" guiY " w" guiWidth, %scriptName%	
-
+	
 	OnMessage(0x201, "WM_LBUTTONDOWN")
 	OnMessage(0xF, "WM_PAINT")
 
@@ -147,7 +147,7 @@ ShowGui:
 	SetTimer, UpdateTrans, -250
 	SetTimer, UpdateCPULoad, -250
 	SetTimer, XGraph_Plot, 1000
-
+	
 Return
 ; -----------------------------------
 ;	GuiContextMenu
@@ -174,7 +174,7 @@ UpdateConfig:
 	Run, Notepad.exe %scriptConfig%, , , notePadPID
 	WinWait, ahk_pid %notepadPID% WinActivate 
 	WinWaitClose
-	GoSub GlobalConfig
+	GoSub ShowGui
 Return
 ; -----------------------------------
 ;	UpdateAlwaysOnTop
@@ -207,8 +207,16 @@ UpdateTrans:
 	; if label called from a menu
 	If (A_ThisMenuItem)
 	{
-		newValue := A_ThisMenuItem
-		menuName := A_ThisMenu
+		If (A_ThisMenuItem == "Settings")
+		{
+			newValue := guiTransparency
+			menuName := "MyOpacityMenu"
+		}
+		Else
+		{
+			newValue := A_ThisMenuItem
+			menuName := A_ThisMenu
+		}
 	}
 	; else, use variables to pass to the function
 	Else
@@ -224,20 +232,22 @@ UpdateTrans:
 	}
 	updateSuccess = newValue = 
 Return
-
-
+; -----------------------------------
 ; from jNizM
 ; http://ahkscript.org/boards/viewtopic.php?f=6&t=254
+; -----------------------------------
 UpdateCPULoad:
     CPU := CPULoad()
     GuiControl,, CPU1, % CPU "%"
 	SetTimer, UpdateCPULoad, 1000
 Return
-
-
+; -----------------------------------
+; By SKAN, CD:22-Apr-2014 / MD:05-May-2014. Thanks to ejor, Codeproject: http://goo.gl/epYnkO
+; http://ahkscript.org/boards/viewtopic.php?p=17166#p17166
+; -----------------------------------
 CPULoad() 
-{ ; By SKAN, CD:22-Apr-2014 / MD:05-May-2014. Thanks to ejor, Codeproject: http://goo.gl/epYnkO
-	Static PIT, PKT, PUT	; http://ahkscript.org/boards/viewtopic.php?p=17166#p17166
+{ 
+	Static PIT, PKT, PUT	
 	IfEqual, PIT,, Return 0, DllCall( "GetSystemTimes", "Int64P",PIT, "Int64P",PKT, "Int64P",PUT )
 
 	DllCall( "GetSystemTimes", "Int64P",CIT, "Int64P",CKT, "Int64P",CUT )
@@ -246,12 +256,16 @@ CPULoad()
 
 	Return ( ( SystemTime - IdleTime ) * 100 ) // SystemTime,    PIT := CIT,    PKT := CKT,    PUT := CUT 
 } 
-
+; -----------------------------------
+;	XGraph_Paint
+; -----------------------------------
 XGraph_Paint:
 	; Sleep -1
 	XGraph_Plot( pGraph )
 Return
-
+; -----------------------------------
+;	XGraph_Plot
+; -----------------------------------
 XGraph_Plot:
 	; CPUL := 5
 	CPUL := CPULoad()
@@ -259,7 +273,9 @@ XGraph_Plot:
 		XGraph_Plot( pGraph, 100 - CPUL, CPUL )
 	}
 Return
-
+; -----------------------------------
+;	WM_PAINT
+; -----------------------------------
 WM_PAINT() {
 	IfEqual, A_GuiControl, pGraph, SetTimer, XGraph_Paint, -1
 }
@@ -270,7 +286,7 @@ WM_PAINT() {
 WM_LBUTTONDOWN(wParam, lParam, msg, hwnd)
 {
     global hMain
-    if (hwnd = hMain)
+    If ( hwnd == hMain )
     {
         PostMessage, 0xA1, 2,,, % WinTitel
     }
@@ -283,17 +299,19 @@ EventExit:
 GuiClose:
 GuiEscape:
 	pGraph := XGraph_Detach( pGraph )
+	
+	; upon close write all current vars to ini
 	GuiControlGet, curPosition,,guiSlider
 	; capture GUI position and record it in INI
 	WinGetPos, guiX, guiY, , , %scriptName%
 	; do not allow GUI position to be negative
-	if (guiX > 0) and (guiY > 0)
+	If ( guiX > 0 ) and ( guiY > 0 )
 	{
 		IniWrite, %guiX%, %scriptConfig%, %scriptName%, guiX
 		IniWrite, %guiY%, %scriptConfig%, %scriptName%, guiY
 	}
 		IniWrite, %guiTransparency%, %scriptConfig%, %scriptName%, guiTransparency
 		IniWrite, %guiAlwaysOnTop%, %scriptConfig%, %scriptName%, guiAlwaysOnTop
-		
+		IniWrite, %guiColor1%, %scriptConfig%, %scriptName%, guiColor1
+		IniWrite, %guiColor2%, %scriptConfig%, %scriptName%, guiColor2		
 ExitApp	
-
