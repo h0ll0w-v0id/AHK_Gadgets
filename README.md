@@ -1,8 +1,9 @@
 Windows_Gadgets
 =======
-<h3>AutoHotkey scripts that mimic Windows 7 Gadgets</h3>
+![Preview](preview.png "Preview")
+<h1>AutoHotkey scripts that mimic Windows 7 Gadgets</h1>
 <br>
-These scripts are built using AutoHotkey: http://ahkscript.org/
+<h1>These scripts are built using AutoHotkey: http://ahkscript.org/</h1>
 <br>
 <hr width=50%>
 <h3>VisualCPU</h3> https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/VisualCPU.ahk
