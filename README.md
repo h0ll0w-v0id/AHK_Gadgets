@@ -17,8 +17,6 @@ Currently down...var bug
 <br>
 => Requires Functions.ahk to be in the same directory to compile
 <br>
-=> Requires VisualConfig.ini to be in the same directory to compile (future improvment will remove this req)
-<br>
 <br>
 <h3>VisualCPU</h3> https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/VisualCPU.ahk
 <br>
@@ -29,8 +27,4 @@ Currently down...var bug
 https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/XGraph.ahk
 <br>
 https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/Functions.ahk
-<br>
-=> Requires VisualConfig.ini to be in the same directory to compile (future improvment will remove this req)
-<br>
-https://github.com/h0ll0w-v0id/Windows_Gadgets/blob/master/VisualConfig.ini
 <br>
