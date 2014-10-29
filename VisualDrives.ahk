@@ -373,7 +373,7 @@ WM_LBUTTONDOWN(wParam, lParam, msg, hwnd)
     global hMain
     if (hwnd = hMain)
     {
-        PostMessage, 0xA1, 2,,, % WinTitel
+        PostMessage, 0xA1, 2,,, % scriptName
     }
 }
 ; -----------------------------------

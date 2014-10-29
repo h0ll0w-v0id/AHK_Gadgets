@@ -182,7 +182,8 @@ Return
 ; ----------------------------------------------------------
 UpdateConfig:
 	Run, Notepad.exe %scriptConfig%, , , notePadPID
-	WinWait, ahk_pid %notepadPID% WinActivate 
+	WinWait, ahk_pid %notepadPID%
+	WinActivate 
 	WinWaitClose
 	GoSub ShowGui
 Return
@@ -290,12 +291,14 @@ XGraph_Plot:
 		XGraph_Plot( pGraph, 100 - CPUL, CPUL )
 	}
 Return
-XGraph_Plot
 ; ----------------------------------------------------------
 ; Function .....: WM_PAINT
 ; ----------------------------------------------------------
 WM_PAINT() {
-	IfEqual, A_GuiControl, pGraph, SetTimer, XGraph_Paint, -1
+	If ( A_GuiControl == pGraph)
+	{
+		SetTimer, XGraph_Paint, -1
+	}
 }
 ; ----------------------------------------------------------
 ; Function .....: WM_LBUTTONDOWN
@@ -306,7 +309,7 @@ WM_LBUTTONDOWN(wParam, lParam, msg, hwnd)
     global hMain
     If ( hwnd == hMain )
     {
-        PostMessage, 0xA1, 2,,, % WinTitel
+        PostMessage, 0xA1, 2,,, ahk_id %hMain%
     }
 }
 ; ----------------------------------------------------------
@@ -314,8 +317,8 @@ WM_LBUTTONDOWN(wParam, lParam, msg, hwnd)
 ; Description ..: Save's Menu and Gui vars then exits
 ; ----------------------------------------------------------
 EventExit:
-GuiClose:
-GuiEscape:
+1GuiClose:
+1GuiEscape:
 	pGraph := XGraph_Detach( pGraph )
 	
 	; upon close write all current vars to ini
