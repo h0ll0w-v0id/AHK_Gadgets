@@ -10,6 +10,7 @@
 	--------------------------------------------------------
 	10/16/14	1.0.1		Updated to include config file editing
 	10/17/14	1.0.2		Updated run command, ini vars write upon close
+	10/29/14	1.0.3		Updated comments
 	--------------------------------------------------------
 
 	Project Overview:
@@ -29,62 +30,67 @@
 	--------------------------------------------------------
 */
 
+#NoEnv
+#SingleInstance Force
+SetWorkingDir %A_ScriptDir%
+SetTitleMatchMode 2	
+SetBatchLines -1
+ListLines, Off
 
+; ----------------------------------------------------------
+; Include ......: Functions.ahk
+; Author .......: h0ll0w
+; Info .........: https://github.com/h0ll0w-v0id/Windows_Gadgets
+; ----------------------------------------------------------
+#include Functions.ahk
+; ----------------------------------------------------------
+; Include ......: xGraph.ahk
+; Author .......: SKAN
+; Info .........: http://ahkscript.org/boards/viewtopic.php?t=3492
+; ----------------------------------------------------------
+#Include xGraph.ahk
 
-	#NoEnv
-	#SingleInstance Force
-	SetWorkingDir %A_ScriptDir%
-	SetTitleMatchMode 2	
-	SetBatchLines -1
-	ListLines, Off
-	
-	; found here https://github.com/h0ll0w-v0id/Windows_Gadgets
-	#include Functions.ahk
-	; found here http://ahkscript.org/boards/viewtopic.php?t=3492
-	#Include xGraph.ahk
-	
-	; -----------------------------------
-	;	Globals
-	; -----------------------------------	
-	global scriptName 	:= 	"VisualCPU" 
-	global scriptVersion 	:=	"1.0.2"
-	global scriptConfig	:=	"VisualConfig.ini"
-	global guiX		:=	Center
-	global guiY		:=	Center
-	global guiWidth		:=	400
-	global guiHeight	:=	200
-	global guiRegion	:=	30
-	global guiControlWidth	:=	( guiWidth - ( guiRegion * 2) )
-	global guiAlwaysOnTop	:=	ON
-	global guiTransparency	:=	204
-	global guiColor1	:=	"0x000000"
-	global guiColor2	:=	"0xFF00FF"
-	; -----------------------------------
-	;	GUI Right Click Menu
-	; -----------------------------------		
-	Menu, MyAlwaysOnTopMenu, Add, ON, UpdateAlwaysOnTop
-	Menu, MyAlwaysOnTopMenu, Add, OFF, UpdateAlwaysOnTop
-	Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 80`%, UpdateTrans
-	Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
-	Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
-	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Always On Top, :MyAlwaysOnTopMenu
-	Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
-	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Settings, UpdateConfig
-	Menu, MyContextMenu, Add
-	Menu, MyContextMenu, Add, Close, EventExit
-	
-; -----------------------------------
-;	GlobalConfig
-; -----------------------------------	
+; ----------------------------------------------------------
+; Globals
+; ----------------------------------------------------------
+global scriptName 	:= 	"VisualCPU" 
+global scriptVersion 	:=	"1.0.2"
+global scriptConfig	:=	"VisualConfig.ini"
+global guiX		:=	Center
+global guiY		:=	Center
+global guiWidth		:=	400
+global guiHeight	:=	200
+global guiRegion	:=	30
+global guiControlWidth	:=	( guiWidth - ( guiRegion * 2) )
+global guiAlwaysOnTop	:=	ON
+global guiTransparency	:=	204
+global guiColor1	:=	"0x000000"
+global guiColor2	:=	"0xFF00FF"
+; ----------------------------------------------------------
+; Menu .........: GUI Right Click Menu
+; ----------------------------------------------------------
+Menu, MyAlwaysOnTopMenu, Add, ON, UpdateAlwaysOnTop
+Menu, MyAlwaysOnTopMenu, Add, OFF, UpdateAlwaysOnTop
+Menu, MyOpacityMenu, Add, 20`%, UpdateTrans
+Menu, MyOpacityMenu, Add, 40`%, UpdateTrans
+Menu, MyOpacityMenu, Add, 60`%, UpdateTrans
+Menu, MyOpacityMenu, Add, 80`%, UpdateTrans
+Menu, MyOpacityMenu, Add, 100`%, UpdateTrans
+Menu, MyContextMenu, Add, Add Gadgets..., AddGadgets
+Menu, MyContextMenu, Add
+Menu, MyContextMenu, Add, Always On Top, :MyAlwaysOnTopMenu
+Menu, MyContextMenu, Add, Opacity, :MyOpacityMenu
+Menu, MyContextMenu, Add
+Menu, MyContextMenu, Add, Settings, UpdateConfig
+Menu, MyContextMenu, Add
+Menu, MyContextMenu, Add, Close, EventExit
+; ----------------------------------------------------------
+; Label ........: GlobalConfig
+; ----------------------------------------------------------
 GlobalConfig:	
-	; -----------------------------------
-	;	Read in Config values (if available)
-	; -----------------------------------
+	; ----------------------------------------------------------
+	; Read in Config values (if available)
+	; ----------------------------------------------------------
 	IfExist %scriptConfig%
 	{
 		IniRead	tempX, %scriptConfig%, %scriptName%, guiX
@@ -120,10 +126,10 @@ GlobalConfig:
 		tempX = tempY = tempAlwaysOnTop = tempTransparency = tempColor1 = tempColor2 = 
 	}
 	GoSub, ShowGui
-Return	
-; -----------------------------------
-;	GUI Display
-; -----------------------------------	
+Return
+; ----------------------------------------------------------
+; Label ........: ShowGui
+; ----------------------------------------------------------	
 ShowGui:
 
 	Gui, 1:	Destroy
@@ -149,36 +155,41 @@ ShowGui:
 	SetTimer, XGraph_Plot, 1000
 	
 Return
-; -----------------------------------
-;	GuiContextMenu
-; -----------------------------------	
+; ----------------------------------------------------------
+; Label ........: GuiContextMenu
+; Description ..: Displays Menu at Gui Coords
+; ----------------------------------------------------------	
 GuiContextMenu:
 	Menu, MyContextMenu, Show, %A_GuiX%, %A_GuiY%
 Return
-; -----------------------------------
-;	AddGadgets
-; -----------------------------------	
+; ----------------------------------------------------------
+; Label ........: AddGadgets
+; Description ..: Opens GitHub
+; ----------------------------------------------------------	
 AddGadgets:
 	Run https://github.com/h0ll0w-v0id/Windows_Gadgets
 Return
-; -----------------------------------
-;	UpdateRegion
-; -----------------------------------
+; ----------------------------------------------------------
+; Label ........: UpdateRegion
+; Description ..: Displays a rounded region over Gui
+; ----------------------------------------------------------	
 UpdateRegion:
 	updateSuccess := Function_UpdateRegion(guiRegion, guiRegion, scriptName)
 Return
-; -----------------------------------
-;	UpdateConfig
-; -----------------------------------
+; ----------------------------------------------------------
+; Label ........: UpdateConfig
+; Description ..: Open and wait for setting file to close
+; ----------------------------------------------------------
 UpdateConfig:
 	Run, Notepad.exe %scriptConfig%, , , notePadPID
 	WinWait, ahk_pid %notepadPID% WinActivate 
 	WinWaitClose
 	GoSub ShowGui
 Return
-; -----------------------------------
-;	UpdateAlwaysOnTop
-; -----------------------------------
+; ----------------------------------------------------------
+; Label ........: UpdateAlwaysOnTop
+; Description ..: Based upon selection, update Gui
+; ----------------------------------------------------------
 UpdateAlwaysOnTop:
 	; if label called from a menu
 	If (A_ThisMenuItem)
@@ -200,9 +211,10 @@ UpdateAlwaysOnTop:
 	}
 	updateSuccess = newValue =
 Return
-; -----------------------------------
-;	UpdateTrans
-; -----------------------------------
+; ----------------------------------------------------------
+; Label ........: UpdateTrans
+; Description ..: Based upon selection, update Gui
+; ----------------------------------------------------------
 UpdateTrans:
 	; if label called from a menu
 	If (A_ThisMenuItem)
@@ -232,19 +244,24 @@ UpdateTrans:
 	}
 	updateSuccess = newValue = 
 Return
-; -----------------------------------
-; from jNizM
-; http://ahkscript.org/boards/viewtopic.php?f=6&t=254
-; -----------------------------------
+; ----------------------------------------------------------
+; Label ........: UpdateCPULoad
+; Description ..: Updates CPU% on Gui
+; Author .......: jNizM
+; Info .........: http://ahkscript.org/boards/viewtopic.php?f=6&t=254
+; ----------------------------------------------------------
 UpdateCPULoad:
     CPU := CPULoad()
     GuiControl,, CPU1, % CPU "%"
 	SetTimer, UpdateCPULoad, 1000
 Return
-; -----------------------------------
-; By SKAN, CD:22-Apr-2014 / MD:05-May-2014. Thanks to ejor, Codeproject: http://goo.gl/epYnkO
-; http://ahkscript.org/boards/viewtopic.php?p=17166#p17166
-; -----------------------------------
+; ----------------------------------------------------------
+; Function .....: CPULoad
+; Description ..: Returns CPU load
+; Author .......: SKAN, ejor
+; Info .........: http://goo.gl/epYnkO
+; ..............: http://ahkscript.org/boards/viewtopic.php?p=17166#p17166
+; ----------------------------------------------------------
 CPULoad() 
 { 
 	Static PIT, PKT, PUT	
@@ -256,16 +273,16 @@ CPULoad()
 
 	Return ( ( SystemTime - IdleTime ) * 100 ) // SystemTime,    PIT := CIT,    PKT := CKT,    PUT := CUT 
 } 
-; -----------------------------------
-;	XGraph_Paint
-; -----------------------------------
+; ----------------------------------------------------------
+; Label ........: XGraph_Paint
+; ----------------------------------------------------------
 XGraph_Paint:
-	; Sleep -1
+	Sleep -1
 	XGraph_Plot( pGraph )
 Return
-; -----------------------------------
-;	XGraph_Plot
-; -----------------------------------
+; ----------------------------------------------------------
+; Label ........: XGraph_Plot
+; ----------------------------------------------------------
 XGraph_Plot:
 	; CPUL := 5
 	CPUL := CPULoad()
@@ -273,16 +290,17 @@ XGraph_Plot:
 		XGraph_Plot( pGraph, 100 - CPUL, CPUL )
 	}
 Return
-; -----------------------------------
-;	WM_PAINT
-; -----------------------------------
+XGraph_Plot
+; ----------------------------------------------------------
+; Function .....: WM_PAINT
+; ----------------------------------------------------------
 WM_PAINT() {
 	IfEqual, A_GuiControl, pGraph, SetTimer, XGraph_Paint, -1
 }
-; -----------------------------------
-;	WM_LBUTTONDOWN
-;	Desc: allows GUI to be movable
-; -----------------------------------
+; ----------------------------------------------------------
+; Function .....: WM_LBUTTONDOWN
+; Description ..: Allows Caption Gui to be "movable"
+; ----------------------------------------------------------
 WM_LBUTTONDOWN(wParam, lParam, msg, hwnd)
 {
     global hMain
@@ -291,10 +309,10 @@ WM_LBUTTONDOWN(wParam, lParam, msg, hwnd)
         PostMessage, 0xA1, 2,,, % WinTitel
     }
 }
-; -----------------------------------
-;	EventExit
-;	Desc: saves script vars
-; -----------------------------------
+; ----------------------------------------------------------
+; Label ........: EventExit
+; Description ..: Save's Menu and Gui vars then exits
+; ----------------------------------------------------------
 EventExit:
 GuiClose:
 GuiEscape:

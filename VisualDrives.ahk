@@ -9,6 +9,7 @@
 	Date		Rev		Change Description
 	--------------------------------------------------------
 	10/16/14	1.0.0		Updated to include config file editing
+	10/29/14	1.0.1		Updated comments
 	--------------------------------------------------------
 
 	Project Overview:

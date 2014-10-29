@@ -2,7 +2,7 @@
 	--------------------------------------------------------
 	REVISION BLOCK
 		
-	Project Name: Class_Functions
+	Project Name: Functions
 	
 	Revision History:
 	
@@ -10,17 +10,18 @@
 	--------------------------------------------------------
 	07/28/14	1.0.0		Beta release
 	10/17/14	1.0.1		Updated Function_UpdateTransparency
+	10/29/14	1.0.2		Updated comments
 		
-*/	
-; -----------------------------------
-;	Function_Eject
-;
-;	Params: 
-;		Drive = Drive Letter
-; -----------------------------------	
+*/
+; ----------------------------------------------------------
+; Function .....: Function_Eject
+; Description ..: Ejects a Drive
+; Author .......: AHK
+; Parameters ...: Drive  - Drive Letter
+; ----------------------------------------------------------
 Function_Eject(Drive)
 {
-	try
+	Try
 	{
 
 		hVolume := DllCall("CreateFile"
@@ -44,20 +45,19 @@ Function_Eject(Drive)
 
 		Return 1
 	}
-	catch
+	Catch
 	{
 
 		Return 0
 	}
 }
-; -----------------------------------
-;	Function_UpdateRegion
-;	
-;	Params:
-;		regionW = 
-;		regionH = 
-;		winTitle = Referencing GUI Name
-; -----------------------------------
+; ----------------------------------------------------------
+; Function .....: Function_UpdateRegion
+; Description ..: Applies a rounded region to a specified window
+; Parameters ...: regionW - Region Width
+; ..............: regionH - Region Height
+; ..............: winTitle - Referencing GUI
+; ----------------------------------------------------------
 Function_UpdateRegion(regionW, regionH, winTitle)
 {
 	Try
@@ -74,14 +74,13 @@ Function_UpdateRegion(regionW, regionH, winTitle)
 	}
 
 }
-; -----------------------------------
-;	Function_AlwaysOnTop
-;	
-;	Params:
-;		newValue = TRUE | FALSE
-;		menuName = Referencing Menu Name
-;		winTitle = Referencing GUI Name
-; -----------------------------------
+; ----------------------------------------------------------
+; Function .....: Function_AlwaysOnTop
+; Description ..: Sets window to be always on top
+; Parameters ...: newValue - ON | OFF
+; ..............: menuName - Referencing Window
+; ..............: winTitle - Referencing GUI
+; ----------------------------------------------------------
 Function_AlwaysOnTop(newValue, menuName, winTitle)
 {
 	Try
@@ -108,14 +107,13 @@ Function_AlwaysOnTop(newValue, menuName, winTitle)
 	}
 
 }
-; -----------------------------------
-;	Function_UpdateTransparency
-;
-;	Params:
-;		newValue = TRUE | FALSE
-;		menuName = Referencing Menu Name
-;		winTitle = Referencing GUI Name
-; -----------------------------------	
+; ----------------------------------------------------------
+; Function .....: Function_UpdateTransparency
+; Description ..: Sets window transparency
+; Parameters ...: newValue - 20%, 40%, 60%, 100% 
+; ..............: menuName - Referencing Window
+; ..............: winTitle - Referencing GUI
+; ----------------------------------------------------------
 Function_UpdateTransparency(newValue, menuName, winTitle)
 {
 
@@ -189,18 +187,18 @@ Function_UpdateTransparency(newValue, menuName, winTitle)
 	}
 	const20 = const40 = const60 = const80 = const100 =
 }
-
-
-; \/ TBD
-
-
-; -----------------------------------
-;	Function_GuiMove
-; -----------------------------------	
-; requires param for scipt name, scipt pos, and 4 screen params
-Function_GuiMove(Scriptname, xPos, yPos, xVirtual, yVirtual, wVirtual, hVirtual)
+; ----------------------------------------------------------
+; Function .....: Function_GuiMove
+; Description ..: Docks Gui to Window edges
+; Parameters ...: winTitle - Referencing GUI
+; ..............: xVirtual - 
+; ..............: yVirtual -
+; ..............: wVirtual -
+; ..............: hVirtual -
+; ----------------------------------------------------------
+Function_GuiMove(winTitle, xVirtual, yVirtual, wVirtual, hVirtual)
 {
-	WinGetPos, x1,y1,,, %scriptName%
+	WinGetPos, x1,y1,,, %winTitle%
 	; if gui reaches or passes the virtual edge (set in global section), snap it back
 	If (x1 >= guiDockRight or y1 >= guiDockBottom)
 	{
@@ -214,7 +212,7 @@ Function_GuiMove(Scriptname, xPos, yPos, xVirtual, yVirtual, wVirtual, hVirtual)
 		{
 			y1 := guiDockBottom
 		}
-		WinMove, %scriptName%,,x1,y1
+		WinMove, %winTitle%,,x1,y1
 	}
 	If (x1 <= guiDockLeftTop or y1 <= guiDockLeftTop)
 	{
@@ -228,21 +226,6 @@ Function_GuiMove(Scriptname, xPos, yPos, xVirtual, yVirtual, wVirtual, hVirtual)
 		{
 			y1 := guiDockLeftTop
 		}
-		WinMove, %scriptName%,,x1,y1
+		WinMove, %winTitle%,,x1,y1
 	}
-}
-
-; from jNizM 
-; http://ahkscript.org/boards/viewtopic.php?f=5&t=4112
-EmptyClipboard()
-{
-    DllCall("User32.dll\EmptyClipboard")
-}
-OpenClipboard(hWndNewOwner = 0)
-{
-    DllCall("User32.dll\OpenClipboard", "Ptr", hWndNewOwner)
-}
-CloseClipboard()
-{
-    DllCall("User32.dll\CloseClipboard")
 }
