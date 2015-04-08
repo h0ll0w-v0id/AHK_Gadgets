@@ -1,4 +1,4 @@
-Windows_Gadgets
+AHK_Gadgets
 =======
 <br>AutoHotkey scripts that mimic Windows 7 Gadgets<br>
 They are movable, have opacity settings and will "remember" position<br>
